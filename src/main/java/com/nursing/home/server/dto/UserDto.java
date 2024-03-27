@@ -10,4 +10,5 @@ public class UserDto {
     private String phone;
     private String email;
     private String password;
+    private String address;
 }
