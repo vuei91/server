@@ -1,12 +1,9 @@
 package com.nursing.home.server.entity;
 
-
-import com.nursing.home.server.dto.member.MemberRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,29 +11,32 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
-public class Member {
+public class Hospital {
+
     @Id
-    @GeneratedValue
-    @Column(name = "member_id")
+    @Column(name="hospital_id")
     private Long id;
-    private String email;
+    // 병원이름
     private String name;
+    // 병원주소
     private String address;
-    private String phone;
-    private String password;
+    // 진료시작시간
+    private LocalDateTime openTime;
+    // 진료종료시간
+    private LocalDateTime closeTime;
+    // 점심시작시간
+    private LocalDateTime lunchStartTime;
+    // 점심끝나는시간
+    private LocalDateTime lunchEndTime;
+    // 위도
+    private String latitude;
+    // 경도
+    private String longitude;
+
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
     @Column(name = "updated_at")
     @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
     private LocalDateTime updatedAt = LocalDateTime.now();
-    public Member(MemberRequest memberRequest) {
-        this.email = memberRequest.getEmail();
-        this.name = memberRequest.getName();
-        this.address = memberRequest.getAddress();
-        this.phone = memberRequest.getPhone();
-        this.password = memberRequest.getPassword();
-    }
 }
