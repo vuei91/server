@@ -1,5 +1,6 @@
 package com.nursing.home.server.config;
 
+import com.nursing.home.server.jwt.JwtFilter;
 import com.nursing.home.server.jwt.JwtUtil;
 import com.nursing.home.server.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +49,11 @@ public class SecurityConfig {
 
         //경로별 인가 작업
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/login", "/*").permitAll()
+                .requestMatchers("/login","/join").permitAll()
                 .anyRequest().authenticated());
+
+        //JWTFilter 등록
+        http.addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
 
         http.addFilterAt(
                 new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),

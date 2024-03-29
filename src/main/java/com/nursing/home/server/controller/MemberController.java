@@ -21,9 +21,10 @@ public class MemberController {
         return "Hello world";
     }
 
-    @PostMapping("/member")
+    @PostMapping("/join")
     public ResponseEntity<MemberResponse> insertMember (@RequestBody MemberRequest memberRequest) {
         MemberResponse memberResponse = memberService.insertUser(memberRequest);
         return ResponseEntity.ok(memberResponse);
     }
+
 }
