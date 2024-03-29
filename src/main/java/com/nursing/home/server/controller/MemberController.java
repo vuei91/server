@@ -16,8 +16,13 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/member")
+    @GetMapping("/")
     public String home() {
+        return "Hello world2";
+    }
+
+    @GetMapping("/member")
+    public String main() {
         return "Hello world";
     }
 
