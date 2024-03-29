@@ -21,11 +21,15 @@ public class Member {
     @GeneratedValue
     @Column(name = "member_id")
     private Long id;
+    @Column(unique = true)
     private String email;
     private String name;
+    @Column(unique = true)
+    private String username;
+    private String role;
+    private String password;
     private String address;
     private String phone;
-    private String password;
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -38,5 +42,7 @@ public class Member {
         this.address = memberRequest.getAddress();
         this.phone = memberRequest.getPhone();
         this.password = memberRequest.getPassword();
+        this.username = memberRequest.getUsername();
+        this.role = memberRequest.getRole();
     }
 }

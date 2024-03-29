@@ -5,19 +5,21 @@ import com.nursing.home.server.dto.member.MemberResponse;
 import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.respository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // 회원등록
     public MemberResponse insertUser(MemberRequest memberRequest) {
+        memberRequest.setPassword(bCryptPasswordEncoder.encode(memberRequest.getPassword()));
         Member member = new Member(memberRequest);
         Member savedMember = memberRepository.save(member);
-        MemberResponse resMember = new MemberResponse(savedMember);
-        return resMember;
+        return new MemberResponse(savedMember);
     }
     // 회원수정
 
