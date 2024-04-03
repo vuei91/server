@@ -46,49 +46,32 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         //csrf disable
-        http.csrf(AbstractHttpConfigurer::disable);
-
-        //Form 로그인 방식 disable
-        http.formLogin(AbstractHttpConfigurer::disable);
-
-        //http basic 인증 방식 disable
-        http.httpBasic(AbstractHttpConfigurer::disable);
-
-        //세션 설정
-        http.sessionManagement((session) -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-
-        //경로별 인가 작업
-        http.authorizeHttpRequests((auth) -> auth
+        httpSecurity
+            .csrf(AbstractHttpConfigurer::disable)
+            .formLogin(AbstractHttpConfigurer::disable)
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/oauth2/**").permitAll()
-                .anyRequest().authenticated());
-
-        // OAuth2 작업
-        http.oauth2Login(oauth -> oauth
+                .anyRequest().authenticated())
+            .oauth2Login(oauth -> oauth
                 .redirectionEndpoint(endPoint -> endPoint.baseUri("/oauth2/callback/*"))
                 .userInfoEndpoint(endPoint -> endPoint.userService(oAuth2UserService))
-                .successHandler(oAuth2SuccessHandler)
-        );
+                .successHandler(oAuth2SuccessHandler))
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .cors((corsCustomizer -> corsCustomizer.configurationSource((request) -> {
+                    CorsConfiguration configuration = new CorsConfiguration();
+                    configuration.addAllowedOrigin("http://localhost:3000");
+                    configuration.addAllowedMethod("*");
+                    configuration.addAllowedHeader("*");
+                    configuration.setAllowCredentials(true);
+                    configuration.setMaxAge(3600L);
+                    configuration.addExposedHeader("Authorization");
+                    return configuration; })));
 
-        //JWTFilter 등록 모든 필터에서 동작을 무조건적으로 실행
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        // cors 설정
-        http.cors((corsCustomizer -> corsCustomizer.configurationSource((request) -> {
-            CorsConfiguration configuration = new CorsConfiguration();
-            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-            configuration.setAllowedMethods(Collections.singletonList("*"));
-            configuration.setAllowCredentials(true);
-            configuration.setAllowedHeaders(Collections.singletonList("*"));
-            configuration.setMaxAge(3600L);
-            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-            return configuration;
-        })));
-
-        return http.build();
+        return httpSecurity.build();
     }
 }
