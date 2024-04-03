@@ -1,15 +1,12 @@
 package com.nursing.home.server.handler;
 
 import com.nursing.home.server.dto.CustomOAuth2User;
-import com.nursing.home.server.dto.CustomUserDetails;
 import com.nursing.home.server.provider.JwtProvider;
-import io.jsonwebtoken.Jwt;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
