@@ -23,6 +23,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         CustomOAuth2User user = (CustomOAuth2User) authentication.getPrincipal();
         String token = jwtProvider.create(user.getName());
-        response.sendRedirect("http://localhost:3000/token/"+token);
+        response.sendRedirect("http://localhost:3000/oauth2/"+token);
     }
 }

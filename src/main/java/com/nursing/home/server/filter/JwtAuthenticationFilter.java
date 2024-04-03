@@ -46,7 +46,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         Member member = memberRepository.findById(id);
         String role = member.getRole();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role));
+        if(role != null) {
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, authorities);
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -56,6 +58,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String parseBearerToken(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
+        System.out.println("Authorization: "+ authorization);
         boolean hasAuthorization = StringUtils.hasText(authorization);
         if(!hasAuthorization) return null;
         boolean isBearer = authorization.startsWith("Bearer ");

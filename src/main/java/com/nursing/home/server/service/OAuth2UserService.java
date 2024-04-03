@@ -1,6 +1,5 @@
 package com.nursing.home.server.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nursing.home.server.dto.CustomOAuth2User;
 import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.respository.MemberRepository;
@@ -11,7 +10,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
