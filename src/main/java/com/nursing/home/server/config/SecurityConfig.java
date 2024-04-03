@@ -1,10 +1,12 @@
 package com.nursing.home.server.config;
 
-import com.nursing.home.server.jwt.JwtFilter;
-import com.nursing.home.server.jwt.JwtUtil;
-import com.nursing.home.server.jwt.LoginFilter;
+import com.nursing.home.server.filter.JwtAuthenticationFilter;
+import com.nursing.home.server.handler.OAuth2SuccessHandler;
+import com.nursing.home.server.provider.JwtProvider;
+import com.nursing.home.server.service.OAuth2UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -22,12 +26,13 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.util.Collections;
 
 @Configuration
+@Configurable
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final AuthenticationConfiguration authenticationConfiguration;
-    private final JwtUtil jwtUtil;
-
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final DefaultOAuth2UserService oAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
 
@@ -46,49 +51,43 @@ public class SecurityConfig {
         //csrf disable
         http.csrf(AbstractHttpConfigurer::disable);
 
-        //From 로그인 방식 disable
+        //Form 로그인 방식 disable
         http.formLogin(AbstractHttpConfigurer::disable);
 
         //http basic 인증 방식 disable
         http.httpBasic(AbstractHttpConfigurer::disable);
 
-        //경로별 인가 작업
-        http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/login","/join").permitAll()
-                .anyRequest().authenticated());
-
-        //JWTFilter 등록
-        http.addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
-
-        http.addFilterAt(
-                new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
-                UsernamePasswordAuthenticationFilter.class
-        );
-
-
         //세션 설정
         http.sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http
-                .cors((corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
 
-                    @Override
-                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+        //경로별 인가 작업
+        http.authorizeHttpRequests((auth) -> auth
+                .requestMatchers("/oauth2/**", "/").permitAll()
+                .anyRequest().authenticated());
 
-                        CorsConfiguration configuration = new CorsConfiguration();
+        // OAuth2 작업
+        http.oauth2Login(oauth -> oauth
+                .redirectionEndpoint(endPoint -> endPoint.baseUri("/oauth2/callback/*"))
+                .userInfoEndpoint(endPoint -> endPoint.userService(oAuth2UserService))
+                .successHandler(oAuth2SuccessHandler)
+        );
 
-                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-                        configuration.setAllowedMethods(Collections.singletonList("*"));
-                        configuration.setAllowCredentials(true);
-                        configuration.setAllowedHeaders(Collections.singletonList("*"));
-                        configuration.setMaxAge(3600L);
+        //JWTFilter 등록 모든 필터에서 동작을 무조건적으로 실행
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-
-                        return configuration;
-                    }
-                })));
+        // cors 설정
+        http.cors((corsCustomizer -> corsCustomizer.configurationSource((request) -> {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+            configuration.setAllowedMethods(Collections.singletonList("*"));
+            configuration.setAllowCredentials(true);
+            configuration.setAllowedHeaders(Collections.singletonList("*"));
+            configuration.setMaxAge(3600L);
+            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+            return configuration;
+        })));
 
         return http.build();
     }

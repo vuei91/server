@@ -9,11 +9,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberRequest {
+    private String id;
+    private String password;
+    private String type;
+    private String role;
     private String name;
     private String phone;
     private String email;
-    private String password;
     private String address;
-    private String username;
-    private String role;
 }

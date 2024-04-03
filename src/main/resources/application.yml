@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -21,14 +21,14 @@ spring:
           kakao:
             client-id: 0f46caa576892c645d6f9a3eaaaabcd3
             client-secret: urUjkmTvwo54mCAfVoMVi5OxewWEbXuq
-            redirect-uri: {baseUrl}/oauth2/callback/{registrationId}
+            redirect-uri: '{baseUrl}/oauth2/callback/{registrationId}'
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_post
             scope: profile_nickname
           naver:
             client-id: xKiz9QydtQ7ZTxuMdHn5
             client-secret: evKiQ4zTbF
-            redirect-uri: {baseUrl}/oauth2/callback/{registrationId}
+            redirect-uri: '{baseUrl}/oauth2/callback/{registrationId}'
             authorization-grant-type: authorization_code
             scope: email
         provider:
