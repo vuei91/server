@@ -62,8 +62,7 @@ public class SecurityConfig {
                     .redirectionEndpoint(endPoint -> endPoint.baseUri("/oauth2/callback/*"))
                     .userInfoEndpoint(endPoint -> endPoint.userService(oAuth2UserService))
                     .successHandler(oAuth2SuccessHandler))
-                .exceptionHandling(e -> e.authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
-
+            .exceptionHandling(e -> e.authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .cors((corsCustomizer -> corsCustomizer.configurationSource((request) -> {
                     CorsConfiguration configuration = new CorsConfiguration();

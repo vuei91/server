@@ -1,5 +1,8 @@
 package com.nursing.home.server.controller;
 
+import com.nursing.home.server.common.ResponseCode;
+import com.nursing.home.server.common.ResponseMessage;
+import com.nursing.home.server.dto.response.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,11 +15,9 @@ import java.util.Map;
 @RestController
 public class HomeController {
 
-    @GetMapping("/verify")
-    public Map<String, Object> home () {
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", 200);
-        map.put("message", "로그인성공!");
-        return map;
+    @GetMapping("/")
+    public ResponseEntity<? super ResponseDto> home () {
+        ResponseDto body = new ResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+        return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 }
