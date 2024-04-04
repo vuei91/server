@@ -1,5 +1,6 @@
 package com.nursing.home.server.config;
 
+import com.nursing.home.server.exception.FailedAuthenticationEntryPoint;
 import com.nursing.home.server.filter.JwtAuthenticationFilter;
 import com.nursing.home.server.handler.OAuth2SuccessHandler;
 import com.nursing.home.server.provider.JwtProvider;
@@ -50,17 +51,19 @@ public class SecurityConfig {
 
         //csrf disable
         httpSecurity
-            .csrf(AbstractHttpConfigurer::disable)
-            .formLogin(AbstractHttpConfigurer::disable)
-            .httpBasic(AbstractHttpConfigurer::disable)
-            .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .csrf(AbstractHttpConfigurer::disable) // csrf disable
+            .formLogin(AbstractHttpConfigurer::disable) // formLogin disable
+            .httpBasic(AbstractHttpConfigurer::disable) // httpBasic disable
+            .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // session stateless
             .authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/oauth2/**").permitAll()
-                .anyRequest().authenticated())
+                    .requestMatchers("/oauth2/**").permitAll() // oauth2 접근 가능처리
+                    .anyRequest().authenticated()) // 그 외의 루트경로는 인증이 끝난 후 접근 가는
             .oauth2Login(oauth -> oauth
-                .redirectionEndpoint(endPoint -> endPoint.baseUri("/oauth2/callback/*"))
-                .userInfoEndpoint(endPoint -> endPoint.userService(oAuth2UserService))
-                .successHandler(oAuth2SuccessHandler))
+                    .redirectionEndpoint(endPoint -> endPoint.baseUri("/oauth2/callback/*"))
+                    .userInfoEndpoint(endPoint -> endPoint.userService(oAuth2UserService))
+                    .successHandler(oAuth2SuccessHandler))
+                .exceptionHandling(e -> e.authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
+
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .cors((corsCustomizer -> corsCustomizer.configurationSource((request) -> {
                     CorsConfiguration configuration = new CorsConfiguration();
