@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -27,6 +28,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final DefaultOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
 
@@ -55,7 +57,7 @@ public class SecurityConfig {
                     .redirectionEndpoint(endPoint -> endPoint.baseUri("/oauth2/callback/*"))
                     .userInfoEndpoint(endPoint -> endPoint.userService(oAuth2UserService))
                     .successHandler(oAuth2SuccessHandler))
-            .exceptionHandling(e -> e.authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
+            .exceptionHandling(e -> e.authenticationEntryPoint(authenticationEntryPoint))
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .cors((corsCustomizer -> corsCustomizer.configurationSource((request) -> {
                     CorsConfiguration configuration = new CorsConfiguration();

@@ -13,9 +13,9 @@ public class ResponseDto {
     private String code;
     private String message;
 
-    public ResponseDto() {
-        this.code = ResponseCode.SUCCESS;
-        this.message = ResponseMessage.SUCCESS;
+    public static ResponseEntity<ResponseDto> success() {
+        ResponseDto body = new ResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+        return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
     public static ResponseEntity<ResponseDto> databaseError() {
@@ -27,4 +27,6 @@ public class ResponseDto {
         ResponseDto responseBody = new ResponseDto(ResponseCode.VALIDATION_FAIL, ResponseMessage.VALIDATION_FAIL);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
+
+
 }

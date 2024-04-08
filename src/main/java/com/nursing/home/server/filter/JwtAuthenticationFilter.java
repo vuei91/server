@@ -32,27 +32,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = parseBearerToken(request);
-        if(token == null) {
-            filterChain.doFilter(request, response);
-            return;
+        try {
+            String token = parseBearerToken(request);
+            if(token == null) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+            String id = jwtProvider.validate(token);
+            if(id == null) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+            Member member = memberRepository.findById(id);
+            String role = member.getRole();
+            List<GrantedAuthority> authorities = new ArrayList<>();
+            if(role != null) {
+                authorities.add(new SimpleGrantedAuthority(role));
+            }
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+            AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, authorities);
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            securityContext.setAuthentication(authenticationToken);
+            SecurityContextHolder.setContext(securityContext);
+        } catch (Exception e) {
+            request.setAttribute("exception", e);
         }
-        String id = jwtProvider.validate(token);
-        if(id == null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        Member member = memberRepository.findById(id);
-        String role = member.getRole();
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        if(role != null) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
-        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, authorities);
-        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        securityContext.setAuthentication(authenticationToken);
-        SecurityContextHolder.setContext(securityContext);
+        filterChain.doFilter(request,response);
+
     }
 
     private String parseBearerToken(HttpServletRequest request) {

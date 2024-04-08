@@ -32,11 +32,6 @@ public class JwtProvider {
 
     public String validate(String jwt) {
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
-        try {
-            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody().getSubject();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody().getSubject();
     }
 }
