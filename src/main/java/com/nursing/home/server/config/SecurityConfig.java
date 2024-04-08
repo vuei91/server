@@ -3,9 +3,6 @@ package com.nursing.home.server.config;
 import com.nursing.home.server.exception.FailedAuthenticationEntryPoint;
 import com.nursing.home.server.filter.JwtAuthenticationFilter;
 import com.nursing.home.server.handler.OAuth2SuccessHandler;
-import com.nursing.home.server.provider.JwtProvider;
-import com.nursing.home.server.service.OAuth2UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
@@ -18,13 +15,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-
-import java.util.Collections;
 
 @Configuration
 @Configurable

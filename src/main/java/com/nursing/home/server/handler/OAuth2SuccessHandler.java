@@ -2,7 +2,6 @@ package com.nursing.home.server.handler;
 
 import com.nursing.home.server.dto.CustomOAuth2User;
 import com.nursing.home.server.provider.JwtProvider;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
