@@ -1,4 +1,4 @@
 package com.nursing.home.server.dto.hospital;
 
-public class HospitalRequest {
+public class HospitalUpdateRequest {
 }

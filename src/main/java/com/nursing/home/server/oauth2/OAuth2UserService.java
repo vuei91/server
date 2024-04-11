@@ -1,6 +1,5 @@
-package com.nursing.home.server.service;
+package com.nursing.home.server.oauth2;
 
-import com.nursing.home.server.dto.CustomOAuth2User;
 import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.respository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class OAuth2UserService  extends DefaultOAuth2UserService {
+public class OAuth2UserService extends DefaultOAuth2UserService {
     private final MemberRepository memberRepository;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest request) throws OAuth2AuthenticationException {

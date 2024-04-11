@@ -1,7 +1,6 @@
-package com.nursing.home.server.filter;
+package com.nursing.home.server.jwt;
 
 import com.nursing.home.server.entity.Member;
-import com.nursing.home.server.provider.JwtProvider;
 import com.nursing.home.server.respository.MemberRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

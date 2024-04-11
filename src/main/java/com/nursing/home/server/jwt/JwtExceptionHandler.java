@@ -1,4 +1,4 @@
-package com.nursing.home.server.handler;
+package com.nursing.home.server.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;

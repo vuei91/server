@@ -1,7 +1,6 @@
-package com.nursing.home.server.handler;
+package com.nursing.home.server.oauth2;
 
-import com.nursing.home.server.dto.CustomOAuth2User;
-import com.nursing.home.server.provider.JwtProvider;
+import com.nursing.home.server.jwt.JwtProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

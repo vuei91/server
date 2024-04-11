@@ -1,6 +1,5 @@
 package com.nursing.home.server.dto.member;
 
-
 import lombok.*;
 
 @Getter
@@ -8,7 +7,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberRequest {
+public class MemberUpdateRequest {
     private String id;
     private String password;
     private String type;

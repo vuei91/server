@@ -1,21 +1,22 @@
 package com.nursing.home.server.entity;
 
 
-import com.nursing.home.server.dto.member.MemberRequest;
+import com.nursing.home.server.dto.member.MemberInsertRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.persistence.OneToMany;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class Member {
@@ -34,14 +35,18 @@ public class Member {
     private final LocalDateTime createdAt = LocalDateTime.now();
     @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
     private final LocalDateTime updatedAt = LocalDateTime.now();
-    public Member(MemberRequest memberRequest) {
-        this.email = memberRequest.getEmail();
-        this.name = memberRequest.getName();
-        this.address = memberRequest.getAddress();
-        this.phone = memberRequest.getPhone();
-        this.password = memberRequest.getPassword();
-        this.role = memberRequest.getRole();
-        this.type = memberRequest.getType();
+
+    @OneToMany(mappedBy = "member")
+    List<Enroll> enrolls = new ArrayList<>();
+
+    public Member(MemberInsertRequest memberInsertRequest) {
+        this.email = memberInsertRequest.getEmail();
+        this.name = memberInsertRequest.getName();
+        this.address = memberInsertRequest.getAddress();
+        this.phone = memberInsertRequest.getPhone();
+        this.password = memberInsertRequest.getPassword();
+        this.role = memberInsertRequest.getRole();
+        this.type = memberInsertRequest.getType();
     }
 
     public Member(String id, String email, String type) {
@@ -54,4 +59,5 @@ public class Member {
         this.id = id;
         this.type = type;
     }
+
 }

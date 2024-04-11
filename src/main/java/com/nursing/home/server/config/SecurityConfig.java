@@ -1,8 +1,7 @@
 package com.nursing.home.server.config;
 
-import com.nursing.home.server.exception.FailedAuthenticationEntryPoint;
-import com.nursing.home.server.filter.JwtAuthenticationFilter;
-import com.nursing.home.server.handler.OAuth2SuccessHandler;
+import com.nursing.home.server.jwt.JwtAuthenticationFilter;
+import com.nursing.home.server.oauth2.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;

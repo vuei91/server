@@ -1,4 +1,4 @@
-package com.nursing.home.server.provider;
+package com.nursing.home.server.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

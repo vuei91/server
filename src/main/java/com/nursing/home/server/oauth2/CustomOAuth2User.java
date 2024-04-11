@@ -1,4 +1,4 @@
-package com.nursing.home.server.dto;
+package com.nursing.home.server.oauth2;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
