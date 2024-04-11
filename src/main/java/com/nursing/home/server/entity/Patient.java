@@ -1,5 +1,6 @@
 package com.nursing.home.server.entity;
 
+import com.nursing.home.server.dto.patient.PatientUpdateRequest;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,4 +28,10 @@ public class Patient {
 
     @OneToMany(mappedBy = "patient")
     List<Enroll> enrolls = new ArrayList<>();
+
+    public void update(PatientUpdateRequest request) {
+        if(request.getName() != null) this.name = request.getName();
+        if(request.getAddress() != null) this.address = request.getAddress();
+        if(request.getPhone() != null) this.phone = request.getPhone();
+    }
 }

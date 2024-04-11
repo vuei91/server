@@ -1,8 +1,13 @@
 package com.nursing.home.server.dto.patient;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Builder
+@ToString
 public class PatientDeleteRequest {
-    private String id;
+    private Long id;
 }
