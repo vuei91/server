@@ -4,10 +4,11 @@ import com.nursing.home.server.entity.Member;
 import lombok.*;
 
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberResponse {
-    private String id;
+    private String username;
     private String name;
     private String phone;
     private String email;
@@ -16,7 +17,7 @@ public class MemberResponse {
     private String type;
 
     public MemberResponse(Member member) {
-        this.id = member.getId();
+        this.username = member.getUsername();
         this.name = member.getName();
         this.phone = member.getPhone();
         this.email = member.getEmail();

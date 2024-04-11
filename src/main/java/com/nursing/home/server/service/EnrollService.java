@@ -7,6 +7,6 @@ import com.nursing.home.server.dto.enroll.EnrollUpdateRequest;
 
 public interface EnrollService {
     EnrollResponse createEnroll(EnrollCreateRequest request);
-    EnrollResponse deleteEnroll(EnrollDeleteRequest request);
-    EnrollResponse updateEnroll(EnrollUpdateRequest request);
+    EnrollResponse deleteEnroll(Long id);
+    EnrollResponse updateEnroll(Long id, EnrollUpdateRequest request);
 }

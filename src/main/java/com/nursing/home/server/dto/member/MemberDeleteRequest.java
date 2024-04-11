@@ -1,8 +1,10 @@
 package com.nursing.home.server.dto.member;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
+@Getter
+@Builder
 public class MemberDeleteRequest {
-    private String id;
+    private String username;
 }

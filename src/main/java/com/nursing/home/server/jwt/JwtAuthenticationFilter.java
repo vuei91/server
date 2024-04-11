@@ -21,6 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -37,19 +38,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
-            String id = jwtProvider.validate(token);
-            if(id == null) {
+            String username = jwtProvider.validate(token);
+            if(username == null) {
                 filterChain.doFilter(request, response);
                 return;
             }
-            Member member = memberRepository.findById(id);
+            Member member = memberRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("유저가 없음"));
             String role = member.getRole();
             List<GrantedAuthority> authorities = new ArrayList<>();
             if(role != null) {
                 authorities.add(new SimpleGrantedAuthority(role));
             }
             SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-            AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, authorities);
+            AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             securityContext.setAuthentication(authenticationToken);
             SecurityContextHolder.setContext(securityContext);

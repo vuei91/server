@@ -9,6 +9,6 @@ import com.nursing.home.server.entity.Patient;
 
 public interface MemberService {
     MemberResponse createMember(MemberCreateRequest request);
-    MemberResponse deleteMember(MemberDeleteRequest request);
-    MemberResponse updateMember(MemberUpdateRequest request);
+    MemberResponse deleteMember(String id);
+    MemberResponse updateMember(String id, MemberUpdateRequest request);
 }

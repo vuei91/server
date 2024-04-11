@@ -2,10 +2,8 @@ package com.nursing.home.server.entity;
 
 
 import com.nursing.home.server.dto.member.MemberCreateRequest;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -22,7 +20,10 @@ import java.util.List;
 public class Member {
     @Id
     @Column(name = "member_id")
-    private String id;
+    @GeneratedValue
+    private Long id;
+    @Column(unique = true)
+    private String username;
     private String password;
     private String type;
     private String role;
@@ -40,6 +41,7 @@ public class Member {
     List<Enroll> enrolls = new ArrayList<>();
 
     public Member(MemberCreateRequest memberCreateRequest) {
+        this.username = memberCreateRequest.getUsername();
         this.email = memberCreateRequest.getEmail();
         this.name = memberCreateRequest.getName();
         this.address = memberCreateRequest.getAddress();
@@ -47,17 +49,6 @@ public class Member {
         this.password = memberCreateRequest.getPassword();
         this.role = memberCreateRequest.getRole();
         this.type = memberCreateRequest.getType();
-    }
-
-    public Member(String id, String email, String type) {
-        this.id = id;
-        this.type = type;
-        this.email = email;
-    }
-
-    public Member(String id, String type) {
-        this.id = id;
-        this.type = type;
     }
 
 }

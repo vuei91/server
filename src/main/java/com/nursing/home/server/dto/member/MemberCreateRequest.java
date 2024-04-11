@@ -5,11 +5,11 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 
 
-@Data
+@Getter
 @Builder
 public class MemberCreateRequest {
     @NotBlank
-    private String id;
+    private String username;
     private String password;
     private String type;
     private String role;

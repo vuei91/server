@@ -16,12 +16,12 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public HospitalResponse deleteHospital(HospitalDeleteRequest request) {
+    public HospitalResponse deleteHospital(Long id) {
         return null;
     }
 
     @Override
-    public HospitalResponse updateHospital(HospitalUpdateRequest request) {
+    public HospitalResponse updateHospital(Long id, HospitalUpdateRequest request) {
         return null;
     }
 }

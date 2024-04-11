@@ -7,6 +7,6 @@ import com.nursing.home.server.dto.hospital.HospitalUpdateRequest;
 
 public interface HospitalService {
     HospitalResponse createHospital(HospitalCreateRequest request);
-    HospitalResponse deleteHospital(HospitalDeleteRequest request);
-    HospitalResponse updateHospital(HospitalUpdateRequest request);
+    HospitalResponse deleteHospital(Long id);
+    HospitalResponse updateHospital(Long id, HospitalUpdateRequest request);
 }

@@ -19,16 +19,20 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberResponse createMember(MemberCreateRequest request) {
+
+        Member member = new Member(request);
+        Member newMember = memberRepository.save(member);
+        return new MemberResponse(newMember);
+    }
+
+    @Override
+    public MemberResponse deleteMember(String id) {
         return null;
     }
 
     @Override
-    public MemberResponse deleteMember(MemberDeleteRequest request) {
+    public MemberResponse updateMember(String id, MemberUpdateRequest request) {
         return null;
     }
 
-    @Override
-    public MemberResponse updateMember(MemberUpdateRequest request) {
-        return null;
-    }
 }

@@ -18,14 +18,4 @@ public class PatientResponse {
     private String address;
     private String role;
     private String type;
-
-    public PatientResponse(Member member) {
-        this.id = member.getId();
-        this.name = member.getName();
-        this.phone = member.getPhone();
-        this.email = member.getEmail();
-        this.address = member.getAddress();
-        this.role = member.getRole();
-        this.type = member.getType();
-    }
 }
