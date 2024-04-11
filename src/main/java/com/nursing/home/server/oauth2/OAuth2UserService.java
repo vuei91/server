@@ -25,14 +25,14 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
         if(oAuthClientName.equals("kakao")) {
             id = "kakao_"+oAuth2User.getAttributes().get("id");
-            member = new Member(id,"kakao");
+            member = Member.builder().id(id).type("kakao").build();
         }
 
         if(oAuthClientName.equals("naver")) {
             Map<String, String> responseMap = (Map<String, String>) oAuth2User.getAttributes().get("response");
             id = "naver_" + responseMap.get("id").substring(0,14);
             String email = responseMap.get("email");
-            member = new Member(id, email, "naver");
+            member = Member.builder().id(id).type("kakao").email(email).build();
         }
 
         memberRepository.save(member);
