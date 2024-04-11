@@ -1,14 +1,10 @@
 package com.nursing.home.server.dto.member;
 
 import com.nursing.home.server.entity.Member;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Getter
-@Setter
-@ToString
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class MemberResponse {
     private String id;

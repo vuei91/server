@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatientInsertRequest {
+public class PatientCreateRequest {
     private String id;
     private String password;
     private String type;
