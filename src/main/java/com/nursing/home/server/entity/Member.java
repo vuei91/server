@@ -1,7 +1,7 @@
 package com.nursing.home.server.entity;
 
 
-import com.nursing.home.server.dto.member.MemberInsertRequest;
+import com.nursing.home.server.dto.member.MemberCreateRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -16,9 +16,9 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class Member {
     @Id
     @Column(name = "member_id")
@@ -39,14 +39,14 @@ public class Member {
     @OneToMany(mappedBy = "member")
     List<Enroll> enrolls = new ArrayList<>();
 
-    public Member(MemberInsertRequest memberInsertRequest) {
-        this.email = memberInsertRequest.getEmail();
-        this.name = memberInsertRequest.getName();
-        this.address = memberInsertRequest.getAddress();
-        this.phone = memberInsertRequest.getPhone();
-        this.password = memberInsertRequest.getPassword();
-        this.role = memberInsertRequest.getRole();
-        this.type = memberInsertRequest.getType();
+    public Member(MemberCreateRequest memberCreateRequest) {
+        this.email = memberCreateRequest.getEmail();
+        this.name = memberCreateRequest.getName();
+        this.address = memberCreateRequest.getAddress();
+        this.phone = memberCreateRequest.getPhone();
+        this.password = memberCreateRequest.getPassword();
+        this.role = memberCreateRequest.getRole();
+        this.type = memberCreateRequest.getType();
     }
 
     public Member(String id, String email, String type) {
