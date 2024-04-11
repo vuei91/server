@@ -1,6 +1,7 @@
 package com.nursing.home.server.service.impl;
 
-import com.nursing.home.server.dto.member.MemberInsertRequest;
+import com.nursing.home.server.dto.member.MemberCreateRequest;
+import com.nursing.home.server.dto.member.MemberDeleteRequest;
 import com.nursing.home.server.dto.member.MemberResponse;
 import com.nursing.home.server.dto.member.MemberUpdateRequest;
 import com.nursing.home.server.entity.Member;
@@ -16,30 +17,18 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    // 회원등록
-    public MemberResponse insertMember(MemberInsertRequest memberInsertRequest) {
-        memberInsertRequest.setPassword(bCryptPasswordEncoder.encode(memberInsertRequest.getPassword()));
-        Member member = new Member(memberInsertRequest);
-        Member savedMember = memberRepository.save(member);
-        return new MemberResponse(savedMember);
-    }
-    // 회원수정
-    public MemberResponse updateMember(MemberUpdateRequest memberUpdateRequest) {
+    @Override
+    public MemberResponse createMember(MemberCreateRequest request) {
         return null;
     }
 
     @Override
-    public Member insertMember() {
+    public MemberResponse deleteMember(MemberDeleteRequest request) {
         return null;
     }
 
     @Override
-    public Member removeMember() {
-        return null;
-    }
-
-    @Override
-    public Member updateMember() {
+    public MemberResponse updateMember(MemberUpdateRequest request) {
         return null;
     }
 }

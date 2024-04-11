@@ -1,21 +1,26 @@
 package com.nursing.home.server.service.impl;
 
+import com.nursing.home.server.dto.hospital.HospitalCreateRequest;
+import com.nursing.home.server.dto.patient.PatientDeleteRequest;
+import com.nursing.home.server.dto.patient.PatientResponse;
+import com.nursing.home.server.dto.patient.PatientUpdateRequest;
 import com.nursing.home.server.entity.Patient;
 import com.nursing.home.server.service.PatientService;
 
 public class PatientServiceImpl implements PatientService {
+
     @Override
-    public Patient insertPatient() {
+    public PatientResponse createPatient(HospitalCreateRequest request) {
         return null;
     }
 
     @Override
-    public Patient removePatient() {
+    public PatientResponse deletePatient(PatientDeleteRequest request) {
         return null;
     }
 
     @Override
-    public Patient updatePatient() {
+    public PatientResponse updatePatient(PatientUpdateRequest request) {
         return null;
     }
 }
