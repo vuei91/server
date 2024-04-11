@@ -25,7 +25,6 @@ public class Member {
     private Long id;
     @Column(unique = true)
     private String username;
-    @Setter
     private String password;
     private String type;
     private String role;
@@ -53,14 +52,14 @@ public class Member {
         this.type = memberCreateRequest.getType();
     }
 
-    public void update(MemberUpdateRequest memberUpdateRequest) {
-        if(memberUpdateRequest.getEmail() != null) this.email = memberUpdateRequest.getEmail();
-        if(memberUpdateRequest.getName() != null) this.name = memberUpdateRequest.getName();
-        if(memberUpdateRequest.getAddress() != null) this.address = memberUpdateRequest.getAddress();
-        if(memberUpdateRequest.getPhone() != null) this.phone = memberUpdateRequest.getPhone();
-        if(memberUpdateRequest.getPassword() != null) this.password = memberUpdateRequest.getPassword();
-        if(memberUpdateRequest.getRole() != null) this.role = memberUpdateRequest.getRole();
-        if(memberUpdateRequest.getType() != null) this.type = memberUpdateRequest.getType();
+    public void update(MemberUpdateRequest request) {
+        if(request.getEmail() != null) this.email = request.getEmail();
+        if(request.getName() != null) this.name = request.getName();
+        if(request.getAddress() != null) this.address = request.getAddress();
+        if(request.getPhone() != null) this.phone = request.getPhone();
+        if(request.getPassword() != null) this.password = request.getPassword();
+        if(request.getRole() != null) this.role = request.getRole();
+        if(request.getType() != null) this.type = request.getType();
     }
 
 }

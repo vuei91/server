@@ -7,6 +7,7 @@ import lombok.*;
 @Builder
 @Getter
 public class MemberUpdateRequest {
+    @Setter
     private String password;
     private String type;
     private String role;

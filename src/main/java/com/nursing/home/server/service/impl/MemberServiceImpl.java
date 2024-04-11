@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberResponse createMember(MemberCreateRequest request) {
-        request = request.toBuilder().password(bCryptPasswordEncoder.encode(request.getPassword())).build();
+        request.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
         Member member = new Member(request);
         Member newMember = memberRepository.save(member);
         return new MemberResponse(newMember);
@@ -35,9 +35,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberResponse updateMember(String username, MemberUpdateRequest request) {
+        request.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
         Member updateMember = memberRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("없는 유저입니다"));
         updateMember.update(request);
-        updateMember.setPassword(bCryptPasswordEncoder.encode(updateMember.getPassword()));
         Member updatedMember = memberRepository.save(updateMember);
         return new MemberResponse(updatedMember);
     }

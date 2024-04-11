@@ -6,10 +6,11 @@ import lombok.*;
 
 
 @Getter
-@Builder(toBuilder = true)
+@Builder
 public class MemberCreateRequest {
     @NotBlank
     private String username;
+    @Setter
     private String password;
     private String type;
     private String role;
