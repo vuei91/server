@@ -8,6 +8,11 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Enroll {
+
+    public enum EnrollStatus {
+        ENROLL, CALL, CONTRACT, DEPOSIT, COMPLETE
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "enroll_id")
