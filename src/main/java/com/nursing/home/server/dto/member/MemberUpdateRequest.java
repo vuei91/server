@@ -5,9 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 @Builder
+@Getter
 public class MemberUpdateRequest {
-    @NotBlank
-    private String id;
     private String password;
     private String type;
     private String role;

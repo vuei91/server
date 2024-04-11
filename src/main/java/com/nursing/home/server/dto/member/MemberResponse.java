@@ -3,7 +3,7 @@ package com.nursing.home.server.dto.member;
 import com.nursing.home.server.entity.Member;
 import lombok.*;
 
-@Builder
+@Builder(toBuilder = true)
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

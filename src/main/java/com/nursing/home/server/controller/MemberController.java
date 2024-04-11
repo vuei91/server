@@ -26,11 +26,14 @@ public class MemberController {
 
     @PutMapping("/{username}")
     public ApiResponse<MemberResponse> updateMember(@PathVariable String username, @RequestBody @Valid MemberUpdateRequest request) {
+        log.info(username);
+        log.info(request.toString());
         return ApiResponse.ok(memberServiceImpl.updateMember(username, request));
     }
 
     @DeleteMapping("/{username}")
     public ApiResponse<MemberResponse> deleteMember(@PathVariable String username) {
+        log.info(username);
         return ApiResponse.ok(memberServiceImpl.deleteMember(username));
     }
 }

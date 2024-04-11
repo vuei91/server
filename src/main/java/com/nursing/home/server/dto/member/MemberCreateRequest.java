@@ -6,7 +6,7 @@ import lombok.*;
 
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 public class MemberCreateRequest {
     @NotBlank
     private String username;

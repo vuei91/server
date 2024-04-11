@@ -2,6 +2,7 @@ package com.nursing.home.server.entity;
 
 
 import com.nursing.home.server.dto.member.MemberCreateRequest;
+import com.nursing.home.server.dto.member.MemberUpdateRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -24,6 +25,7 @@ public class Member {
     private Long id;
     @Column(unique = true)
     private String username;
+    @Setter
     private String password;
     private String type;
     private String role;
@@ -49,6 +51,16 @@ public class Member {
         this.password = memberCreateRequest.getPassword();
         this.role = memberCreateRequest.getRole();
         this.type = memberCreateRequest.getType();
+    }
+
+    public void update(MemberUpdateRequest memberUpdateRequest) {
+        if(memberUpdateRequest.getEmail() != null) this.email = memberUpdateRequest.getEmail();
+        if(memberUpdateRequest.getName() != null) this.name = memberUpdateRequest.getName();
+        if(memberUpdateRequest.getAddress() != null) this.address = memberUpdateRequest.getAddress();
+        if(memberUpdateRequest.getPhone() != null) this.phone = memberUpdateRequest.getPhone();
+        if(memberUpdateRequest.getPassword() != null) this.password = memberUpdateRequest.getPassword();
+        if(memberUpdateRequest.getRole() != null) this.role = memberUpdateRequest.getRole();
+        if(memberUpdateRequest.getType() != null) this.type = memberUpdateRequest.getType();
     }
 
 }
