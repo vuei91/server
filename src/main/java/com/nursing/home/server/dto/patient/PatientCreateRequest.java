@@ -1,6 +1,7 @@
 package com.nursing.home.server.dto.patient;
 
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 
 @Getter
@@ -9,8 +10,9 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class PatientCreateRequest {
-    private Long id;
     private String name;
     private String phone;
     private String address;
+    private String memberUsername;
+    private Integer grade;
 }

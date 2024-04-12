@@ -8,5 +8,5 @@ import com.nursing.home.server.dto.patient.PatientUpdateRequest;
 public interface PatientService {
     PatientResponse createPatient(PatientCreateRequest request);
     PatientResponse deletePatient(Long id);
-    PatientResponse updatePatient(Long id, PatientUpdateRequest request);
+    PatientResponse updatePatient(Long id, String username, PatientUpdateRequest request);
 }

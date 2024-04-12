@@ -24,9 +24,9 @@ public class PatientController {
         return ApiResponse.ok(patientServiceImpl.createPatient(request));
     }
 
-    @PutMapping("/{id}")
-    public ApiResponse<PatientResponse> updatePatient(@PathVariable Long id, @RequestBody @Valid PatientUpdateRequest request) {
-        return ApiResponse.ok(patientServiceImpl.updatePatient(id, request));
+    @PutMapping("/{id}/{username}")
+    public ApiResponse<PatientResponse> updatePatient(@PathVariable Long id, @PathVariable String username, @RequestBody @Valid PatientUpdateRequest request) {
+        return ApiResponse.ok(patientServiceImpl.updatePatient(id, username, request));
     }
 
     @DeleteMapping("/{id}")

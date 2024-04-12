@@ -8,6 +8,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ExceptionController {
+
+    @ExceptionHandler({NotFoundMemberException.class, NotFoundPatientException.class, NotFoundHospitalException.class, NotFoundEnrollException.class})
+    public ApiResponse<String> NotFoundException(Exception e) {
+        e.printStackTrace();
+        return ApiResponse.fail(e.getMessage());
+    }
+
     @ExceptionHandler({Exception.class})
     public ApiResponse<String> ResponseException (Exception e) {
         e.printStackTrace();

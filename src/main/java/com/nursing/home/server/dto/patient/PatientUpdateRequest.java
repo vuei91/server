@@ -8,8 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class PatientUpdateRequest {
-    private Long id;
     private String name;
     private String phone;
     private String address;
+    private String memberUsername;
+    private Integer grade;
 }

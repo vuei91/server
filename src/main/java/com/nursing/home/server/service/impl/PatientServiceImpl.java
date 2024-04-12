@@ -1,29 +1,67 @@
 package com.nursing.home.server.service.impl;
 
-import com.nursing.home.server.dto.hospital.HospitalCreateRequest;
 import com.nursing.home.server.dto.patient.PatientCreateRequest;
-import com.nursing.home.server.dto.patient.PatientDeleteRequest;
 import com.nursing.home.server.dto.patient.PatientResponse;
 import com.nursing.home.server.dto.patient.PatientUpdateRequest;
+import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.entity.Patient;
+import com.nursing.home.server.entity.Relation;
+import com.nursing.home.server.exception.NotFoundMemberException;
+import com.nursing.home.server.exception.NotFoundPatientException;
+import com.nursing.home.server.exception.NotFoundRelationException;
+import com.nursing.home.server.respository.MemberRepository;
+import com.nursing.home.server.respository.PatientRepository;
+import com.nursing.home.server.respository.RelationRepository;
 import com.nursing.home.server.service.PatientService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
+    private final MemberRepository memberRepository;
+    private final PatientRepository patientRepository;
+    private final RelationRepository relationRepository;
 
     @Override
+    @Transactional
     public PatientResponse createPatient(PatientCreateRequest request) {
-        return null;
+        Member member = memberRepository
+                .findByUsername(request.getMemberUsername())
+                .orElseThrow(NotFoundMemberException::new);
+        Patient patient = new Patient(request);
+        Relation relation = Relation
+                .builder()
+                .member(member)
+                .patient(patient)
+                .build();
+        relationRepository.save(relation);
+        Patient newPatient = patientRepository.save(patient);
+        return new PatientResponse(newPatient);
     }
 
     @Override
+    @Transactional
     public PatientResponse deletePatient(Long id) {
-        return null;
+        Patient patient = patientRepository.findById(id).orElseThrow(NotFoundPatientException::new);
+        patientRepository.delete(patient);
+        return new PatientResponse(patient);
     }
 
     @Override
-    public PatientResponse updatePatient(Long id, PatientUpdateRequest request) {
-        return null;
+    @Transactional
+    public PatientResponse updatePatient(Long id, String username, PatientUpdateRequest request) {
+        Patient updatedPatient = patientRepository.findById(id).orElseThrow(NotFoundPatientException::new);
+        if(username != null) {
+            Member oldMember = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
+            Member newMember = memberRepository.findByUsername(request.getMemberUsername()).orElseThrow(NotFoundMemberException::new);
+            Relation relation = relationRepository.findByMemberIdAndPatientId(oldMember.getId(), updatedPatient.getId()).orElseThrow(NotFoundRelationException::new);
+            relation.setMember(newMember);
+            relationRepository.save(relation);
+        }
+        updatedPatient.update(request);
+        Patient patient = patientRepository.save(updatedPatient);
+        return new PatientResponse(patient);
     }
 }
