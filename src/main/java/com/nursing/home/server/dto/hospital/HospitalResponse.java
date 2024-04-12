@@ -1,6 +1,5 @@
 package com.nursing.home.server.dto.hospital;
 
-import com.nursing.home.server.entity.ClinicHours;
 import com.nursing.home.server.entity.Hospital;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +18,7 @@ public class HospitalResponse {
     // 병원주소
     private String address;
     // 진료시간
-    private ClinicHoursResponse clinicHoursResponse;
+    private ClinicHoursCUDResponse clinicHoursCUDResponse;
     // 점심시작시간
     private LocalTime lunchStartTime;
     // 점심끝나는시간
@@ -38,6 +37,6 @@ public class HospitalResponse {
         this.lunchEndTime = hospital.getLunchEndTime();
         this.latitude = hospital.getLatitude();
         this.longitude = hospital.getLongitude();
-        this.clinicHoursResponse = new ClinicHoursResponse(hospital.getClinicHours());
+        this.clinicHoursCUDResponse = new ClinicHoursCUDResponse(hospital.getClinicHours());
     }
 }

@@ -1,6 +1,5 @@
 package com.nursing.home.server.dto.patient;
 
-import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.entity.Patient;
 import lombok.*;
 
@@ -9,14 +8,14 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatientResponse {
+public class PatientCUDResponse {
     private Long id;
     private String name;
     private String phone;
     private Integer grade;
     private String address;
 
-    public PatientResponse(Patient patient) {
+    public PatientCUDResponse(Patient patient) {
         this.id = patient.getId();
         this.name = patient.getName();
         this.phone = patient.getPhone();

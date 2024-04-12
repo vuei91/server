@@ -1,7 +1,7 @@
 package com.nursing.home.server.service.impl;
 
 import com.nursing.home.server.dto.member.MemberCreateRequest;
-import com.nursing.home.server.dto.member.MemberResponse;
+import com.nursing.home.server.dto.member.MemberCUDResponse;
 import com.nursing.home.server.dto.member.MemberUpdateRequest;
 import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.exception.NotFoundMemberException;
@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -20,27 +18,27 @@ public class MemberServiceImpl implements MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public MemberResponse createMember(MemberCreateRequest request) {
+    public MemberCUDResponse createMember(MemberCreateRequest request) {
         request.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
         Member member = new Member(request);
         Member newMember = memberRepository.save(member);
-        return new MemberResponse(newMember);
+        return new MemberCUDResponse(newMember);
     }
 
     @Override
-    public MemberResponse deleteMember(String username) {
+    public MemberCUDResponse deleteMember(String username) {
         Member deleteMember = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
         memberRepository.deleteById(deleteMember.getId());
-        return new MemberResponse(deleteMember);
+        return new MemberCUDResponse(deleteMember);
     }
 
     @Override
-    public MemberResponse updateMember(String username, MemberUpdateRequest request) {
+    public MemberCUDResponse updateMember(String username, MemberUpdateRequest request) {
         request.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
         Member updateMember = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
         updateMember.update(request);
         Member updatedMember = memberRepository.save(updateMember);
-        return new MemberResponse(updatedMember);
+        return new MemberCUDResponse(updatedMember);
     }
 
 }

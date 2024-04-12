@@ -1,7 +1,7 @@
 package com.nursing.home.server.service.impl;
 
 import com.nursing.home.server.dto.patient.PatientCreateRequest;
-import com.nursing.home.server.dto.patient.PatientResponse;
+import com.nursing.home.server.dto.patient.PatientCUDResponse;
 import com.nursing.home.server.dto.patient.PatientUpdateRequest;
 import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.entity.Patient;
@@ -26,7 +26,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional
-    public PatientResponse createPatient(PatientCreateRequest request) {
+    public PatientCUDResponse createPatient(PatientCreateRequest request) {
         Member member = memberRepository
                 .findByUsername(request.getMemberUsername())
                 .orElseThrow(NotFoundMemberException::new);
@@ -38,20 +38,20 @@ public class PatientServiceImpl implements PatientService {
                 .build();
         relationRepository.save(relation);
         Patient newPatient = patientRepository.save(patient);
-        return new PatientResponse(newPatient);
+        return new PatientCUDResponse(newPatient);
     }
 
     @Override
     @Transactional
-    public PatientResponse deletePatient(Long id) {
+    public PatientCUDResponse deletePatient(Long id) {
         Patient patient = patientRepository.findById(id).orElseThrow(NotFoundPatientException::new);
         patientRepository.delete(patient);
-        return new PatientResponse(patient);
+        return new PatientCUDResponse(patient);
     }
 
     @Override
     @Transactional
-    public PatientResponse updatePatient(Long id, String username, PatientUpdateRequest request) {
+    public PatientCUDResponse updatePatient(Long id, String username, PatientUpdateRequest request) {
         Patient updatedPatient = patientRepository.findById(id).orElseThrow(NotFoundPatientException::new);
         if(username != null) {
             Member oldMember = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
@@ -62,6 +62,6 @@ public class PatientServiceImpl implements PatientService {
         }
         updatedPatient.update(request);
         Patient patient = patientRepository.save(updatedPatient);
-        return new PatientResponse(patient);
+        return new PatientCUDResponse(patient);
     }
 }

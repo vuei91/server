@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberResponse {
+public class MemberCUDResponse {
     private String username;
     private String name;
     private String phone;
@@ -16,7 +16,7 @@ public class MemberResponse {
     private String role;
     private String type;
 
-    public MemberResponse(Member member) {
+    public MemberCUDResponse(Member member) {
         this.username = member.getUsername();
         this.name = member.getName();
         this.phone = member.getPhone();

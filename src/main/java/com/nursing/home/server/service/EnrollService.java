@@ -1,10 +1,10 @@
 package com.nursing.home.server.service;
 
 import com.nursing.home.server.dto.enroll.EnrollCreateRequest;
-import com.nursing.home.server.dto.enroll.EnrollResponse;
+import com.nursing.home.server.dto.enroll.EnrollCUDResponse;
 
 public interface EnrollService {
-    EnrollResponse enroll(EnrollCreateRequest request);
-    EnrollResponse cancel(Long id);
-    EnrollResponse progress(Long id);
+    EnrollCUDResponse enroll(EnrollCreateRequest request);
+    EnrollCUDResponse cancel(Long id);
+    EnrollCUDResponse progress(Long id);
 }

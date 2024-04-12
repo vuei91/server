@@ -1,8 +1,6 @@
 package com.nursing.home.server.dto.hospital;
 
 import com.nursing.home.server.entity.ClinicHours;
-import com.nursing.home.server.entity.Hospital;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +10,7 @@ import java.time.LocalTime;
 @Getter
 @AllArgsConstructor
 @Builder
-public class ClinicHoursResponse {
+public class ClinicHoursCUDResponse {
     private Long id;
     private Boolean isOpenMon;
     private LocalTime monStartTime;
@@ -39,7 +37,7 @@ public class ClinicHoursResponse {
     private LocalTime holidayStartTime;
     private LocalTime holidayEndTime;
 
-    public ClinicHoursResponse(ClinicHours clinicHours) {
+    public ClinicHoursCUDResponse(ClinicHours clinicHours) {
         this.id = clinicHours.getId();
         this.isOpenMon = clinicHours.getIsOpenMon();
         this.monStartTime = clinicHours.getMonStartTime();

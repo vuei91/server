@@ -1,7 +1,7 @@
 package com.nursing.home.server.service.impl;
 
 import com.nursing.home.server.dto.enroll.EnrollCreateRequest;
-import com.nursing.home.server.dto.enroll.EnrollResponse;
+import com.nursing.home.server.dto.enroll.EnrollCUDResponse;
 import com.nursing.home.server.entity.*;
 import com.nursing.home.server.exception.*;
 import com.nursing.home.server.respository.*;
@@ -19,7 +19,7 @@ public class EnrollServiceImpl implements EnrollService {
     private final RelationRepository relationRepository;
 
     @Override
-    public EnrollResponse enroll(EnrollCreateRequest request) {
+    public EnrollCUDResponse enroll(EnrollCreateRequest request) {
         Member member = memberRepository
                 .findByUsername(request.getUsername())
                 .orElseThrow(NotFoundMemberException::new);
@@ -34,22 +34,22 @@ public class EnrollServiceImpl implements EnrollService {
                 .orElseThrow(NotFoundPatientException::new);
         Enroll enroll = new Enroll(hospital, relation, request);
         Enroll newEnroll = enrollRepository.save(enroll);
-        return new EnrollResponse(newEnroll, patient, member);
+        return new EnrollCUDResponse(newEnroll, patient, member);
     }
 
     @Override
-    public EnrollResponse cancel(Long id) {
+    public EnrollCUDResponse cancel(Long id) {
         Enroll enroll = enrollRepository.findById(id).orElseThrow(NotFoundEnrollException::new);
         enroll.cancel();
         Enroll newEnroll = enrollRepository.save(enroll);
-        return new EnrollResponse(newEnroll);
+        return new EnrollCUDResponse(newEnroll);
     }
 
     @Override
-    public EnrollResponse progress(Long id) {
+    public EnrollCUDResponse progress(Long id) {
         Enroll enroll = enrollRepository.findById(id).orElseThrow(NotFoundEnrollException::new);
         enroll.progress();
         Enroll newEnroll = enrollRepository.save(enroll);
-        return new EnrollResponse(newEnroll);
+        return new EnrollCUDResponse(newEnroll);
     }
 }
