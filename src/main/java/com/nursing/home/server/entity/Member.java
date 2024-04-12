@@ -31,6 +31,7 @@ public class Member {
     @Column(unique = true)
     private String email;
     private String name;
+    @Column(unique = true)
     private String phone;
     private String address;
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
@@ -40,6 +41,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     List<Enroll> enrolls = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    List<Relation> relations = new ArrayList<>();
 
     public Member(MemberCreateRequest memberCreateRequest) {
         this.username = memberCreateRequest.getUsername();
