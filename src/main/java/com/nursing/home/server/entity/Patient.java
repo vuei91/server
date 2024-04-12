@@ -30,10 +30,7 @@ public class Patient {
     private final LocalDateTime createdAt = LocalDateTime.now();
     @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
     private final LocalDateTime updatedAt = LocalDateTime.now();
-
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    List<Enroll> enrolls = new ArrayList<>();
-
+    
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     List<Relation> relations = new ArrayList<>();
 

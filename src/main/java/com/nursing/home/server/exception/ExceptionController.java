@@ -15,6 +15,12 @@ public class ExceptionController {
         return ApiResponse.fail(e.getMessage());
     }
 
+    @ExceptionHandler({ProgressFaultException.class, ProgressCancelException.class})
+    public ApiResponse<String> ProgressException(Exception e) {
+        e.printStackTrace();
+        return ApiResponse.fail(e.getMessage());
+    }
+
     @ExceptionHandler({Exception.class})
     public ApiResponse<String> ResponseException (Exception e) {
         e.printStackTrace();

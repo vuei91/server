@@ -10,8 +10,4 @@ public class EnrollCreateRequest {
     private Long patientId;
     private Long hospitalId;
     private LocalDateTime startTime;
-    private String patientName;
-    private String patientPhone;
-    private String patientGrade;
-
 }

@@ -1,7 +1,10 @@
 package com.nursing.home.server.entity;
 
+import ch.qos.logback.core.model.processor.ProcessorException;
 import com.nursing.home.server.dto.enroll.EnrollCreateRequest;
 import com.nursing.home.server.dto.enroll.EnrollUpdateRequest;
+import com.nursing.home.server.exception.ProgressCancelException;
+import com.nursing.home.server.exception.ProgressFaultException;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,10 +19,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @ToString
+@Getter
 public class Enroll {
 
     public enum EnrollStatus {
-        ENROLL, CALL, CONTRACT, DEPOSIT, COMPLETE
+        ENROLL, CALL, CONTRACT, DEPOSIT, COMPLETE, CANCLE
     }
 
     @Id
@@ -28,15 +32,12 @@ public class Enroll {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
+    @JoinColumn(name = "relation_id")
+    private Relation relation;
 
     private LocalDateTime startTime;
     private EnrollStatus enrollStatus; // ENROLL, CALL, CONTRACT, DEPOSIT, COMPLETE
@@ -46,8 +47,31 @@ public class Enroll {
     @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
     private final LocalDateTime updatedAt = LocalDateTime.now();
 
-    public void update(EnrollUpdateRequest request) {
+    public Enroll(Hospital hospital, Relation relation, EnrollCreateRequest request) {
+        this.hospital = hospital;
+        this.relation = relation;
+        this.startTime = request.getStartTime();
+        this.enrollStatus = EnrollStatus.ENROLL;
+    }
 
+    public void cancel() {
+        this.enrollStatus = EnrollStatus.CANCLE;
+    }
+
+    public void progress() {
+        if(this.enrollStatus == EnrollStatus.ENROLL) {
+            this.enrollStatus = EnrollStatus.CALL;
+        } else if(this.enrollStatus == EnrollStatus.CALL) {
+            this.enrollStatus = EnrollStatus.CONTRACT;
+        } else if(this.enrollStatus == EnrollStatus.CONTRACT) {
+            this.enrollStatus = EnrollStatus.DEPOSIT;
+        } else if(this.enrollStatus == EnrollStatus.DEPOSIT) {
+            this.enrollStatus = EnrollStatus.COMPLETE;
+        } else if (this.enrollStatus == EnrollStatus.COMPLETE) {
+            throw new ProgressFaultException();
+        } else if(this.enrollStatus == EnrollStatus.CANCLE) {
+            throw new ProgressCancelException();
+        }
     }
 
 }

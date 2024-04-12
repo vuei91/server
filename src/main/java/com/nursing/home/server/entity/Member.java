@@ -39,8 +39,6 @@ public class Member {
     @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
     private final LocalDateTime updatedAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "member")
-    List<Enroll> enrolls = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     List<Relation> relations = new ArrayList<>();
