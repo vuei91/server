@@ -42,7 +42,7 @@ public class Member {
     @OneToMany(mappedBy = "member")
     List<Enroll> enrolls = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     List<Relation> relations = new ArrayList<>();
 
     public Member(MemberCreateRequest memberCreateRequest) {
