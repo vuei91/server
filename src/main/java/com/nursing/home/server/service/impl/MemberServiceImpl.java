@@ -4,6 +4,7 @@ import com.nursing.home.server.dto.member.MemberCreateRequest;
 import com.nursing.home.server.dto.member.MemberResponse;
 import com.nursing.home.server.dto.member.MemberUpdateRequest;
 import com.nursing.home.server.entity.Member;
+import com.nursing.home.server.exception.NotFoundMemberException;
 import com.nursing.home.server.respository.MemberRepository;
 import com.nursing.home.server.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -28,15 +29,15 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberResponse deleteMember(String username) {
-        Member deleteMember = memberRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("없는 유저입니다"));
+        Member deleteMember = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
         memberRepository.deleteById(deleteMember.getId());
-        return MemberResponse.builder().username(deleteMember.getUsername()).build();
+        return new MemberResponse(deleteMember);
     }
 
     @Override
     public MemberResponse updateMember(String username, MemberUpdateRequest request) {
         request.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
-        Member updateMember = memberRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("없는 유저입니다"));
+        Member updateMember = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
         updateMember.update(request);
         Member updatedMember = memberRepository.save(updateMember);
         return new MemberResponse(updatedMember);
