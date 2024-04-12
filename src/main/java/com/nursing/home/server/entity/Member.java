@@ -4,7 +4,6 @@ package com.nursing.home.server.entity;
 import com.nursing.home.server.dto.member.MemberCreateRequest;
 import com.nursing.home.server.dto.member.MemberUpdateRequest;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

@@ -1,17 +1,13 @@
 package com.nursing.home.server.entity;
 
-import ch.qos.logback.core.model.processor.ProcessorException;
 import com.nursing.home.server.dto.enroll.EnrollCreateRequest;
-import com.nursing.home.server.dto.enroll.EnrollUpdateRequest;
 import com.nursing.home.server.exception.ProgressCancelException;
 import com.nursing.home.server.exception.ProgressFaultException;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.parameters.P;
 
-import javax.swing.*;
 import java.time.LocalDateTime;
 
 @Entity
