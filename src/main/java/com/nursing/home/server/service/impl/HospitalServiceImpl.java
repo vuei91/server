@@ -3,6 +3,7 @@ package com.nursing.home.server.service.impl;
 import com.nursing.home.server.dto.hospital.*;
 import com.nursing.home.server.entity.ClinicHours;
 import com.nursing.home.server.entity.Hospital;
+import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.respository.ClinicHoursRepository;
 import com.nursing.home.server.respository.HospitalRepository;
 import com.nursing.home.server.service.HospitalService;
@@ -11,12 +12,25 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class HospitalServiceImpl implements HospitalService {
     private final HospitalRepository hospitalRepository;
     private final ClinicHoursRepository clinicHoursRepository;
+
+    @Override
+    public List<HospitalReadResponse> getHospitals() {
+        List<Hospital> hospitals = hospitalRepository.findAll();
+        return hospitals
+                .stream()
+                .map(HospitalReadResponse::new)
+                .toList();
+    }
+
     @Override
     public HospitalCUDResponse createHospital(HospitalCreateRequest request) {
         log.info(request.toString());

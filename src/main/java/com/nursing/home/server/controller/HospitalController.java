@@ -3,11 +3,14 @@ package com.nursing.home.server.controller;
 import com.nursing.home.server.common.ApiResponse;
 import com.nursing.home.server.dto.hospital.HospitalCreateRequest;
 import com.nursing.home.server.dto.hospital.HospitalCUDResponse;
+import com.nursing.home.server.dto.hospital.HospitalReadResponse;
 import com.nursing.home.server.dto.hospital.HospitalUpdateRequest;
 import com.nursing.home.server.service.impl.HospitalServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/hospital")
@@ -15,6 +18,11 @@ import org.springframework.web.bind.annotation.*;
 public class HospitalController {
 
     private final HospitalServiceImpl hospitalService;
+
+    @GetMapping("/")
+    public ApiResponse<List<HospitalReadResponse>> getHospitals() {
+        return ApiResponse.ok(hospitalService.getHospitals());
+    }
 
     @PostMapping("/")
     public ApiResponse<HospitalCUDResponse> createHospital(@RequestBody @Valid HospitalCreateRequest request) {
