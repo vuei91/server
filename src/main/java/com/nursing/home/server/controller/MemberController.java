@@ -3,6 +3,7 @@ package com.nursing.home.server.controller;
 import com.nursing.home.server.common.ApiResponse;
 import com.nursing.home.server.dto.member.MemberCreateRequest;
 import com.nursing.home.server.dto.member.MemberCUDResponse;
+import com.nursing.home.server.dto.member.MemberReadResponse;
 import com.nursing.home.server.dto.member.MemberUpdateRequest;
 import com.nursing.home.server.service.impl.MemberServiceImpl;
 import jakarta.validation.Valid;
@@ -17,6 +18,13 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberServiceImpl memberServiceImpl;
+
+    @GetMapping("/")
+    public ApiResponse<MemberReadResponse> memberReadResponse() {
+        // TODO 로그인 유저 네임으로 검색하도록 변경해야함
+        String username = "wkwk2805";
+        return ApiResponse.ok(memberServiceImpl.getMember(username));
+    }
 
     @PostMapping("/")
     public ApiResponse<MemberCUDResponse> createMember(@RequestBody @Valid MemberCreateRequest request) {

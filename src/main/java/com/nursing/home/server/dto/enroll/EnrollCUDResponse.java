@@ -1,6 +1,6 @@
 package com.nursing.home.server.dto.enroll;
 
-import com.nursing.home.server.dto.hospital.HospitalResponse;
+import com.nursing.home.server.dto.hospital.HospitalCUDResponse;
 import com.nursing.home.server.dto.member.MemberCUDResponse;
 import com.nursing.home.server.dto.patient.PatientCUDResponse;
 import com.nursing.home.server.entity.*;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class EnrollCUDResponse {
     private Long id;
-    private HospitalResponse hospital;
+    private HospitalCUDResponse hospital;
     private PatientCUDResponse patientCUDResponse;
     private MemberCUDResponse memberCUDResponse;
     private LocalDateTime startTime;
@@ -25,7 +25,7 @@ public class EnrollCUDResponse {
 
     public EnrollCUDResponse(Enroll enroll, Patient patient, Member member) {
         this.id = enroll.getId();
-        this.hospital = new HospitalResponse(enroll.getHospital());
+        this.hospital = new HospitalCUDResponse(enroll.getHospital());
         this.patientCUDResponse = new PatientCUDResponse(patient);
         this.memberCUDResponse = new MemberCUDResponse(member);
         this.startTime = enroll.getStartTime();

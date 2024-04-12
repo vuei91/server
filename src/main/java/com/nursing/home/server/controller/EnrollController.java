@@ -17,8 +17,6 @@ public class EnrollController {
 
     private final EnrollServiceImpl enrollServiceImpl;
 
-
-
     @PostMapping("/")
     public ApiResponse<EnrollCUDResponse> enroll(@RequestBody @Valid EnrollCreateRequest request) {
         return ApiResponse.ok(enrollServiceImpl.enroll(request));

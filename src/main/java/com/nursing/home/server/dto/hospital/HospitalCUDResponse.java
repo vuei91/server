@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @Builder
 @AllArgsConstructor
 @Getter
-public class HospitalResponse {
+public class HospitalCUDResponse {
     private Long id;
     // 병원이름
     private String name;
@@ -28,7 +28,7 @@ public class HospitalResponse {
     // 경도
     private String longitude;
 
-    public HospitalResponse(Hospital hospital) {
+    public HospitalCUDResponse(Hospital hospital) {
         this.id = hospital.getId();
         this.name = hospital.getName();
         this.contact = hospital.getContact();
