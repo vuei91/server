@@ -3,7 +3,6 @@ package com.nursing.home.server.controller;
 import com.nursing.home.server.common.ApiResponse;
 import com.nursing.home.server.dto.enroll.EnrollCreateRequest;
 import com.nursing.home.server.dto.enroll.EnrollCUDResponse;
-import com.nursing.home.server.dto.enroll.EnrollReadResponse;
 import com.nursing.home.server.service.impl.EnrollServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

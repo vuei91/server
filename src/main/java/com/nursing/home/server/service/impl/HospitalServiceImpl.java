@@ -3,7 +3,6 @@ package com.nursing.home.server.service.impl;
 import com.nursing.home.server.dto.hospital.*;
 import com.nursing.home.server.entity.ClinicHours;
 import com.nursing.home.server.entity.Hospital;
-import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.respository.ClinicHoursRepository;
 import com.nursing.home.server.respository.HospitalRepository;
 import com.nursing.home.server.service.HospitalService;
@@ -12,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -34,11 +33,19 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public HospitalCUDResponse createHospital(HospitalCreateRequest request) {
         log.info(request.toString());
-        ClinicHours clinicHours = new ClinicHours(request);
-        ClinicHours newClinicHours = clinicHoursRepository.save(clinicHours);
-        Hospital newHospital = new Hospital(request, newClinicHours);
+        log.info(request.getClinicHoursList().toString());
+        Hospital newHospital = new Hospital(request);
         Hospital hospital = hospitalRepository.save(newHospital);
-        return new HospitalCUDResponse(hospital);
+        List<ClinicHoursCUDResponse> clinicHoursList = new ArrayList<>();
+        List<ClinicHoursCreateRequest> clinicHoursCreateRequests = request.getClinicHoursList();
+        for (ClinicHoursCreateRequest clinicHoursCreateRequest : clinicHoursCreateRequests) {
+            ClinicHours clinicHours = new ClinicHours(clinicHoursCreateRequest, hospital);
+            ClinicHours newClinicHours = clinicHoursRepository.save(clinicHours);
+            clinicHoursList.add(new ClinicHoursCUDResponse(newClinicHours));
+        }
+        HospitalCUDResponse hospitalCUDResponse = new HospitalCUDResponse(hospital);
+        hospitalCUDResponse.setClinicHoursCUDResponseList(clinicHoursList);
+        return hospitalCUDResponse;
     }
 
     @Override
@@ -46,7 +53,6 @@ public class HospitalServiceImpl implements HospitalService {
     public HospitalCUDResponse deleteHospital(Long id) {
         Hospital hospital = hospitalRepository.findById(id).orElseThrow(() -> new RuntimeException("없는 병원입니다"));
         hospitalRepository.delete(hospital);
-        clinicHoursRepository.delete(hospital.getClinicHours());
         return new HospitalCUDResponse(hospital);
     }
 
@@ -54,9 +60,9 @@ public class HospitalServiceImpl implements HospitalService {
     @Transactional
     public HospitalCUDResponse updateHospital(Long id, HospitalUpdateRequest request) {
         Hospital hospital = hospitalRepository.findById(id).orElseThrow(() -> new RuntimeException("없는 병원입니다"));
-        ClinicHours updatedClinicHours = clinicHoursRepository.findById(hospital.getClinicHours().getId()).orElseThrow(() -> new RuntimeException("없는 진료시간입니다"));
-        updatedClinicHours.update(request);
-        clinicHoursRepository.save(updatedClinicHours);
+//        ClinicHours updatedClinicHours = clinicHoursRepository.findById(hospital.getClinicHours().getId()).orElseThrow(() -> new RuntimeException("없는 진료시간입니다"));
+//        updatedClinicHours.update(request);
+//        clinicHoursRepository.save(updatedClinicHours);
         hospital.update(request);
         Hospital updatedHospital = hospitalRepository.save(hospital);
         return new HospitalCUDResponse(updatedHospital);
