@@ -21,21 +21,27 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         String oAuthClientName = request.getClientRegistration().getClientName();
 
         Member member = null;
-        String id = null;
+        String username = null;
 
         if(oAuthClientName.equals("kakao")) {
-            id = "kakao_"+oAuth2User.getAttributes().get("id");
-            member = Member.builder().username(id).type("kakao").build();
+            username = "kakao_"+oAuth2User.getAttributes().get("id");
+            member = Member.builder().username(username).type("kakao").build();
         }
 
         if(oAuthClientName.equals("naver")) {
             Map<String, String> responseMap = (Map<String, String>) oAuth2User.getAttributes().get("response");
-            id = "naver_" + responseMap.get("id").substring(0,14);
+            username = "naver_" + responseMap.get("id").substring(0,14);
             String email = responseMap.get("email");
-            member = Member.builder().username(id).type("kakao").email(email).build();
+            member = Member.builder().username(username).type("naver").email(email).build();
         }
 
-        memberRepository.save(member);
-        return new CustomOAuth2User(id);
+        Member newMember;
+        Member oldMember = memberRepository.findByUsername(username).orElse(null);
+        if(oldMember == null) {
+            newMember = memberRepository.save(member);
+        } else {
+            newMember = oldMember;
+        }
+        return new CustomOAuth2User(newMember.getUsername());
     }
 }

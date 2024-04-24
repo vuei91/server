@@ -1,11 +1,13 @@
 package com.nursing.home.server.jwt;
 
 import com.nursing.home.server.entity.Member;
+import com.nursing.home.server.exception.NotFoundMemberException;
 import com.nursing.home.server.respository.MemberRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +19,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import reactor.util.annotation.NonNullApi;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final MemberRepository memberRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse  response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = parseBearerToken(request);
             if(token == null) {
@@ -43,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
-            Member member = memberRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("유저가 없음"));
+            Member member = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
             String role = member.getRole();
             List<GrantedAuthority> authorities = new ArrayList<>();
             if(role != null) {
