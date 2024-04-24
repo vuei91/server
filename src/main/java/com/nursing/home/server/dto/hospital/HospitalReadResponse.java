@@ -13,8 +13,11 @@ public class HospitalReadResponse {
     private String name;
     private String tel;
     private String address;
+    private String category;
+    private String subject;
+    private String doctors;
     @Setter
-    private List<ClinicHoursReadResponse> clinicHoursReadResponseList = new ArrayList<>();
+    private List<ClinicHoursReadResponse> clinicHoursList = new ArrayList<>();
     // 위도
     private String latitude;
     // 경도
@@ -27,5 +30,9 @@ public class HospitalReadResponse {
         this.address = hospital.getAddress();
         this.latitude = hospital.getLatitude();
         this.longitude = hospital.getLongitude();
+        this.category = hospital.getCategory();
+        this.subject = hospital.getSubject();
+        this.doctors = hospital.getDoctors();
+        this.clinicHoursList = hospital.getClinicHoursList().stream().map(ClinicHoursReadResponse::new).toList();
     }
 }

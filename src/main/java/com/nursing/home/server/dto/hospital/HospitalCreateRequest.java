@@ -13,20 +13,18 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class HospitalCreateRequest {
-
     // 병원이름
     private String name;
     private String tel;
     // 병원주소
     private String address;
-    // 점심시작시간
-    private LocalTime lunchStartTime;
-    // 점심끝나는시간
-    private LocalTime lunchEndTime;
+    private String category;
     // 위도
     private String latitude;
     // 경도
     private String longitude;
+    private String doctors;
+    private String subject;
     // 진료시간
     private List<ClinicHoursCreateRequest> clinicHoursList;
 }

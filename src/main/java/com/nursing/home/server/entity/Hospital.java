@@ -24,12 +24,15 @@ public class Hospital {
     private Long id;
     // 병원이름
     private String name;
+    private String category;
     // 병원전화번호
     private String tel;
     // 병원 주소
     private String address;
     // 병원 웹사이트
     private String website;
+    private String subject;
+    private String doctors;
 
     @OneToMany(mappedBy = "hospital")
     private List<ClinicHours> clinicHoursList = new ArrayList<>();
@@ -51,6 +54,9 @@ public class Hospital {
         this.address = request.getAddress();
         this.latitude = request.getLatitude();
         this.longitude = request.getLongitude();
+        this.category = request.getCategory();
+        this.doctors = request.getDoctors();
+        this.subject = request.getSubject();
     }
 
     public void update(HospitalUpdateRequest request) {
@@ -59,5 +65,6 @@ public class Hospital {
         if(request.getAddress() != null) this.address = request.getAddress();
         if(request.getLatitude() != null) this.latitude = request.getLatitude();
         if(request.getLongitude() != null) this.longitude = request.getLongitude();
+        if(request.getCategory() != null) this.category = request.getCategory();
     }
 }

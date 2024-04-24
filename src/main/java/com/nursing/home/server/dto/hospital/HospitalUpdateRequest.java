@@ -15,8 +15,6 @@ public class HospitalUpdateRequest {
     private String address;
     private String latitude;
     private String longitude;
-
-    // 진료시간
-    private Long clinicHoursId;
-    private List<ClinicHoursCUDResponse> clinicHoursCUDResponseList;
+    private String category;
+    private List<ClinicHoursUpdateRequest> clinicHoursList;
 }

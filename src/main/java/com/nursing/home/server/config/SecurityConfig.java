@@ -50,7 +50,7 @@ public class SecurityConfig {
             .httpBasic(AbstractHttpConfigurer::disable) // httpBasic disable
             .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // session stateless
             .authorizeHttpRequests((auth) -> auth
-                    .requestMatchers("/oauth2/**", "/patient/**").permitAll() // oauth2 접근 가능처리
+                    .requestMatchers("/oauth2/**").permitAll() // oauth2 접근 가능처리
                     .anyRequest().authenticated()) // 그 외의 루트경로는 인증이 끝난 후 접근 가는
             .oauth2Login(oauth -> oauth
                     .redirectionEndpoint(endPoint -> endPoint.baseUri("/oauth2/callback/*"))

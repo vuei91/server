@@ -17,6 +17,7 @@ public class HospitalCUDResponse {
     // 병원이름
     private String name;
     private String tel;
+    private String category;
     // 병원주소
     private String address;
     // 진료시간
@@ -31,6 +32,7 @@ public class HospitalCUDResponse {
         this.id = hospital.getId();
         this.name = hospital.getName();
         this.tel = hospital.getTel();
+        this.category = hospital.getCategory();
         this.address = hospital.getAddress();
         this.latitude = hospital.getLatitude();
         this.longitude = hospital.getLongitude();
