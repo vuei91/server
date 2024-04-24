@@ -7,7 +7,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,12 +18,10 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import reactor.util.annotation.NonNullApi;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -34,22 +31,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final MemberRepository memberRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse  response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = parseBearerToken(request);
-            if(token == null) {
+            if (token == null) {
                 filterChain.doFilter(request, response);
                 return;
             }
             String username = jwtProvider.validate(token);
-            if(username == null) {
+            if (username == null) {
                 filterChain.doFilter(request, response);
                 return;
             }
             Member member = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
             String role = member.getRole();
             List<GrantedAuthority> authorities = new ArrayList<>();
-            if(role != null) {
+            if (role != null) {
                 authorities.add(new SimpleGrantedAuthority(role));
             }
             SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
@@ -59,17 +56,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.setContext(securityContext);
         } catch (Exception e) {
             request.setAttribute("exception", e);
+            throw e;
         }
-        filterChain.doFilter(request,response);
-
+        filterChain.doFilter(request, response);
     }
 
     private String parseBearerToken(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         boolean hasAuthorization = StringUtils.hasText(authorization);
-        if(!hasAuthorization) return null;
+        if (!hasAuthorization) return null;
         boolean isBearer = authorization.startsWith("Bearer ");
-        if(!isBearer) return null;
+        if (!isBearer) return null;
         return authorization.substring(7);
     }
 }
