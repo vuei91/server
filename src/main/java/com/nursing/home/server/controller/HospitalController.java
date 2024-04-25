@@ -19,9 +19,14 @@ public class HospitalController {
 
     private final HospitalServiceImpl hospitalService;
 
-    @GetMapping("/")
+    @GetMapping("/list")
     public ApiResponse<List<HospitalReadResponse>> getHospitals() {
         return ApiResponse.ok(hospitalService.getHospitals());
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<HospitalReadResponse> getHospital(@PathVariable Long id) {
+        return ApiResponse.ok(hospitalService.getHospital(id));
     }
 
     @PostMapping("/")

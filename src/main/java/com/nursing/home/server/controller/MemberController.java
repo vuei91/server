@@ -9,6 +9,8 @@ import com.nursing.home.server.service.impl.MemberServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -21,8 +23,8 @@ public class MemberController {
 
     @GetMapping("/")
     public ApiResponse<MemberReadResponse> memberReadResponse() {
-        // TODO 로그인 유저 네임으로 검색하도록 변경해야함
-        String username = "wkwk2805";
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        String username = securityContext.getAuthentication().getName();
         return ApiResponse.ok(memberServiceImpl.getMember(username));
     }
 

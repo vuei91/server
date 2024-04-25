@@ -25,6 +25,8 @@ public class HospitalCreateRequest {
     private String longitude;
     private String doctors;
     private String subject;
+    private String convenience;
+    private String parking;
     // 진료시간
     private List<ClinicHoursCreateRequest> clinicHoursList;
 }

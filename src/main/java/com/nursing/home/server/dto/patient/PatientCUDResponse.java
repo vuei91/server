@@ -12,7 +12,7 @@ public class PatientCUDResponse {
     private Long id;
     private String name;
     private String phone;
-    private Integer grade;
+    private String grade;
     private String address;
 
     public PatientCUDResponse(Patient patient) {

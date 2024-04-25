@@ -12,5 +12,5 @@ public class PatientUpdateRequest {
     private String phone;
     private String address;
     private String memberUsername;
-    private Integer grade;
+    private String grade;
 }

@@ -16,5 +16,7 @@ public class HospitalUpdateRequest {
     private String latitude;
     private String longitude;
     private String category;
+    private String convenience;
+    private String parking;
     private List<ClinicHoursUpdateRequest> clinicHoursList;
 }

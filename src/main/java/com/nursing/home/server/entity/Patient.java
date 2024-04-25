@@ -25,7 +25,7 @@ public class Patient {
     @Column(unique = true)
     private String phone;
     private String address;
-    private Integer grade;
+    private String grade;
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
     private final LocalDateTime createdAt = LocalDateTime.now();
     @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌

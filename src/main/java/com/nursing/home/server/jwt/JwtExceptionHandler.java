@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class JwtExceptionHandler {
 
+    @ExceptionHandler(NotFoundTokenException.class)
+    public ResponseEntity<ApiResponse<String>> signatureExceptionHandler(Exception e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error(e.getMessage()));
+    }
+
     @ExceptionHandler(SignatureException.class)
     public ResponseEntity<ApiResponse<String>> signatureExceptionHandler() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error("잘못된 토큰입니다"));

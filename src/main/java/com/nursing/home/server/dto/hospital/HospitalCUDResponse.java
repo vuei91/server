@@ -27,6 +27,8 @@ public class HospitalCUDResponse {
     private String latitude;
     // 경도
     private String longitude;
+    private String convenience;
+    private String parking;
 
     public HospitalCUDResponse(Hospital hospital) {
         this.id = hospital.getId();
@@ -36,6 +38,8 @@ public class HospitalCUDResponse {
         this.address = hospital.getAddress();
         this.latitude = hospital.getLatitude();
         this.longitude = hospital.getLongitude();
+        this.convenience = hospital.getConvenience();
+        this.parking = hospital.getParking();
     }
 
 

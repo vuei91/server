@@ -3,6 +3,7 @@ package com.nursing.home.server.service.impl;
 import com.nursing.home.server.dto.hospital.*;
 import com.nursing.home.server.entity.ClinicHours;
 import com.nursing.home.server.entity.Hospital;
+import com.nursing.home.server.exception.NotFoundMemberException;
 import com.nursing.home.server.respository.ClinicHoursRepository;
 import com.nursing.home.server.respository.HospitalRepository;
 import com.nursing.home.server.service.HospitalService;
@@ -28,6 +29,12 @@ public class HospitalServiceImpl implements HospitalService {
                 .stream()
                 .map(HospitalReadResponse::new)
                 .toList();
+    }
+
+    @Override
+    public HospitalReadResponse getHospital(Long id) {
+        Hospital hospital = hospitalRepository.findById(id).orElseThrow(NotFoundMemberException::new);
+        return new HospitalReadResponse(hospital);
     }
 
     @Override

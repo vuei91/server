@@ -8,7 +8,7 @@ public class PatientReadResponse {
     private Long id;
     private String name;
     private String phone;
-    private Integer grade;
+    private String grade;
     private String address;
 
     public PatientReadResponse(Patient patient) {

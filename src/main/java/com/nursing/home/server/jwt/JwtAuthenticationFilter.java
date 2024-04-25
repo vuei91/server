@@ -35,13 +35,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             String token = parseBearerToken(request);
             if (token == null) {
-                filterChain.doFilter(request, response);
-                return;
+                throw new NotFoundTokenException();
             }
             String username = jwtProvider.validate(token);
             if (username == null) {
-                filterChain.doFilter(request, response);
-                return;
+                throw new NotFoundMemberException();
             }
             Member member = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
             String role = member.getRole();

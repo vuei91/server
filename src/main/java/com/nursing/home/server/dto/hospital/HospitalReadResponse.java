@@ -22,6 +22,8 @@ public class HospitalReadResponse {
     private String latitude;
     // 경도
     private String longitude;
+    private String convenience;
+    private String parking;
 
     public HospitalReadResponse(Hospital hospital) {
         this.id = hospital.getId();
@@ -33,6 +35,8 @@ public class HospitalReadResponse {
         this.category = hospital.getCategory();
         this.subject = hospital.getSubject();
         this.doctors = hospital.getDoctors();
+        this.convenience = hospital.getConvenience();
+        this.parking = hospital.getParking();
         this.clinicHoursList = hospital.getClinicHoursList().stream().map(ClinicHoursReadResponse::new).toList();
     }
 }

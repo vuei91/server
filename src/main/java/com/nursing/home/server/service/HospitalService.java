@@ -10,6 +10,9 @@ import java.util.List;
 public interface HospitalService {
 
     List<HospitalReadResponse> getHospitals();
+
+    HospitalReadResponse getHospital(Long id);
+
     HospitalCUDResponse createHospital(HospitalCreateRequest request);
     HospitalCUDResponse deleteHospital(Long id);
     HospitalCUDResponse updateHospital(Long id, HospitalUpdateRequest request);

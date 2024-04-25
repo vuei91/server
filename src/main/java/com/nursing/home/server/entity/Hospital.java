@@ -33,6 +33,8 @@ public class Hospital {
     private String website;
     private String subject;
     private String doctors;
+    private String convenience;
+    private String parking;
 
     @OneToMany(mappedBy = "hospital")
     private List<ClinicHours> clinicHoursList = new ArrayList<>();
