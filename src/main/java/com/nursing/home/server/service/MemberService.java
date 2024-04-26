@@ -7,7 +7,7 @@ import com.nursing.home.server.dto.member.MemberUpdateRequest;
 
 public interface MemberService {
 
-    MemberReadResponse getMember(String username);
+    MemberReadResponse getMember();
     MemberCUDResponse createMember(MemberCreateRequest request);
     MemberCUDResponse deleteMember(String id);
     MemberCUDResponse updateMember(String id, MemberUpdateRequest request);
