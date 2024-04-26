@@ -40,6 +40,7 @@ public class HospitalCUDResponse {
         this.longitude = hospital.getLongitude();
         this.convenience = hospital.getConvenience();
         this.parking = hospital.getParking();
+        this.clinicHoursCUDResponseList = hospital.getClinicHoursList().stream().map(ClinicHoursCUDResponse::new).toList();
     }
 
 

@@ -59,6 +59,8 @@ public class Hospital {
         this.category = request.getCategory();
         this.doctors = request.getDoctors();
         this.subject = request.getSubject();
+        this.parking = request.getParking();
+        this.convenience = request.getConvenience();
     }
 
     public void update(HospitalUpdateRequest request) {
@@ -68,5 +70,7 @@ public class Hospital {
         if(request.getLatitude() != null) this.latitude = request.getLatitude();
         if(request.getLongitude() != null) this.longitude = request.getLongitude();
         if(request.getCategory() != null) this.category = request.getCategory();
+        if(request.getParking() != null) this.parking = request.getParking();
+        if(request.getConvenience() != null) this.convenience = request.getConvenience();
     }
 }
