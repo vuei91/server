@@ -3,7 +3,6 @@ package com.nursing.home.server.dto.member;
 import com.nursing.home.server.dto.patient.PatientReadResponse;
 import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.entity.Patient;
-import com.nursing.home.server.entity.Relation;
 import lombok.Getter;
 
 import java.util.List;
@@ -17,9 +16,9 @@ public class MemberReadResponse {
     private String address;
     private String role;
     private String type;
-    private List<Relation> relations;
+    private List<PatientReadResponse> patients;
 
-    public MemberReadResponse(Member member) {
+    public MemberReadResponse(Member member, List<Patient> patients) {
         this.username = member.getUsername();
         this.name = member.getName();
         this.phone = member.getPhone();
@@ -27,6 +26,6 @@ public class MemberReadResponse {
         this.address = member.getAddress();
         this.role = member.getRole();
         this.type = member.getType();
-        this.relations = member.getRelations();
+        this.patients = patients.stream().map(PatientReadResponse::new).toList();
     }
 }
