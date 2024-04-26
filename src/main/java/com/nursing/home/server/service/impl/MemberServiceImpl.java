@@ -1,27 +1,37 @@
 package com.nursing.home.server.service.impl;
 
-import com.nursing.home.server.dto.member.MemberCreateRequest;
 import com.nursing.home.server.dto.member.MemberCUDResponse;
+import com.nursing.home.server.dto.member.MemberCreateRequest;
 import com.nursing.home.server.dto.member.MemberReadResponse;
 import com.nursing.home.server.dto.member.MemberUpdateRequest;
 import com.nursing.home.server.entity.Member;
+import com.nursing.home.server.entity.Patient;
 import com.nursing.home.server.exception.NotFoundMemberException;
 import com.nursing.home.server.respository.MemberRepository;
+import com.nursing.home.server.respository.PatientRepository;
 import com.nursing.home.server.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PatientRepository patientRepository;
 
     @Override
-    public MemberReadResponse getMember(String username) {
+    public MemberReadResponse getMember() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        String username = securityContext.getAuthentication().getName();
         Member member = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
-        return new MemberReadResponse(member);
+        List<Patient> patients = patientRepository.findAllByRelationsIn(member.getRelations());
+        return new MemberReadResponse(member, patients);
     }
 
     @Override
