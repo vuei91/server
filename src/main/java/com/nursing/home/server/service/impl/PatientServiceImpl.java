@@ -15,6 +15,8 @@ import com.nursing.home.server.respository.RelationRepository;
 import com.nursing.home.server.service.PatientService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,8 +29,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     @Transactional
     public PatientCUDResponse createPatient(PatientCreateRequest request) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        String username = securityContext.getAuthentication().getName();
         Member member = memberRepository
-                .findByUsername(request.getMemberUsername())
+                .findByUsername(username)
                 .orElseThrow(NotFoundMemberException::new);
         Patient patient = new Patient(request);
         Relation relation = Relation

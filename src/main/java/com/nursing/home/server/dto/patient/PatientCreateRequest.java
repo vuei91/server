@@ -13,6 +13,5 @@ public class PatientCreateRequest {
     private String name;
     private String phone;
     private String address;
-    private String memberUsername;
     private String grade;
 }
