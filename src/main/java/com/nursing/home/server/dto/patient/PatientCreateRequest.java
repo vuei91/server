@@ -1,7 +1,6 @@
 package com.nursing.home.server.dto.patient;
 
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
 
 @Getter
