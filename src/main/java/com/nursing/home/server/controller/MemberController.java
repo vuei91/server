@@ -1,16 +1,14 @@
 package com.nursing.home.server.controller;
 
 import com.nursing.home.server.common.ApiResponse;
-import com.nursing.home.server.dto.member.MemberCreateRequest;
 import com.nursing.home.server.dto.member.MemberCUDResponse;
+import com.nursing.home.server.dto.member.MemberCreateRequest;
 import com.nursing.home.server.dto.member.MemberReadResponse;
 import com.nursing.home.server.dto.member.MemberUpdateRequest;
 import com.nursing.home.server.service.impl.MemberServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -23,9 +21,7 @@ public class MemberController {
 
     @GetMapping("/")
     public ApiResponse<MemberReadResponse> memberReadResponse() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        String username = securityContext.getAuthentication().getName();
-        return ApiResponse.ok(memberServiceImpl.getMember(username));
+        return ApiResponse.ok(memberServiceImpl.getMember());
     }
 
     @PostMapping("/")
