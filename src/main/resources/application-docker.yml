@@ -14,22 +14,22 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
   jwt:
-    secret: fjadsfdsoaingdosaingoseingodisnsoaeingoasidnoaidhgovduhreyqruyeqyfdsfoiagugfweg
+    secret: ${JWT_SECRET}
 
   security:
     oauth2:
       client:
         registration:
           kakao:
-            client-id: 0f46caa576892c645d6f9a3eaaaabcd3
-            client-secret: urUjkmTvwo54mCAfVoMVi5OxewWEbXuq
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
             redirect-uri: '{baseUrl}/oauth2/callback/{registrationId}'
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_post
             scope: profile_nickname
           naver:
-            client-id: xKiz9QydtQ7ZTxuMdHn5
-            client-secret: evKiQ4zTbF
+            client-id: ${NAVER_CLIENT_ID}
+            client-secret: ${NAVER_CLIENT_SECRET}
             redirect-uri: '{baseUrl}/oauth2/callback/{registrationId}'
             authorization-grant-type: authorization_code
             scope: email
