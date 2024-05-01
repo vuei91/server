@@ -4,6 +4,7 @@ import com.nursing.home.server.jwt.JwtAuthenticationFilter;
 import com.nursing.home.server.oauth2.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,10 @@ public class SecurityConfig {
     private final DefaultOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
+
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
 
@@ -60,7 +65,7 @@ public class SecurityConfig {
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .cors((corsCustomizer -> corsCustomizer.configurationSource((request) -> {
                     CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.addAllowedOrigin("http://localhost:3000");
+                    configuration.addAllowedOrigin(frontendUrl);
                     configuration.addAllowedMethod("*");
                     configuration.addAllowedHeader("*");
                     configuration.setAllowCredentials(true);
