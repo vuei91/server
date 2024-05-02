@@ -52,4 +52,4 @@ logging:
       type: trace
 
 frontend:
-  url: http://localhost
+  url: ${FRONTEND_URL}
