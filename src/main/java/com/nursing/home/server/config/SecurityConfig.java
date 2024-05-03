@@ -2,7 +2,9 @@ package com.nursing.home.server.config;
 
 import com.nursing.home.server.jwt.JwtAuthenticationFilter;
 import com.nursing.home.server.oauth2.OAuth2SuccessHandler;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+@Slf4j
 @Configuration
 @Configurable
 @EnableWebSecurity
@@ -32,6 +35,19 @@ public class SecurityConfig {
 
     @Value("${frontend.url}")
     private String frontendUrl;
+
+    @Value("${spring.datasource.url}")
+    private String url;
+
+    @Value("${spring.datasource.username}")
+    private String username;
+
+    @PostConstruct
+    public void init() {
+        log.info("frontend_url= {}", frontendUrl);
+        log.info("db_url = {}", url);
+        log.info("db_username = {}", username);
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
