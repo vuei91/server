@@ -2,9 +2,8 @@ package com.nursing.home.server.dto.hospital;
 
 import com.nursing.home.server.entity.Hospital;
 import lombok.Getter;
-import lombok.Setter;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Getter
@@ -16,8 +15,7 @@ public class HospitalReadResponse {
     private String category;
     private String subject;
     private String doctors;
-    @Setter
-    private List<ClinicHoursReadResponse> clinicHoursList = new ArrayList<>();
+    private List<ClinicHoursReadResponse> clinicHoursList;
     // 위도
     private String latitude;
     // 경도
