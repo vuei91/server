@@ -2,7 +2,7 @@ package com.nursing.home.server.jwt;
 
 import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.exception.NotFoundMemberException;
-import com.nursing.home.server.respository.MemberRepository;
+import com.nursing.home.server.repository.MemberRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

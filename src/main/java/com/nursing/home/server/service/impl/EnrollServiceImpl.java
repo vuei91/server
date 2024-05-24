@@ -5,7 +5,7 @@ import com.nursing.home.server.dto.enroll.EnrollCreateRequest;
 import com.nursing.home.server.dto.enroll.EnrollReadResponse;
 import com.nursing.home.server.entity.*;
 import com.nursing.home.server.exception.*;
-import com.nursing.home.server.respository.*;
+import com.nursing.home.server.repository.*;
 import com.nursing.home.server.service.EnrollService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

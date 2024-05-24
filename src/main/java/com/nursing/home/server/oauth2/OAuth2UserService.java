@@ -1,7 +1,7 @@
 package com.nursing.home.server.oauth2;
 
 import com.nursing.home.server.entity.Member;
-import com.nursing.home.server.respository.MemberRepository;
+import com.nursing.home.server.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

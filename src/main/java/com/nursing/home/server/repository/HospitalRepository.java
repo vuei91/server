@@ -1,4 +1,4 @@
-package com.nursing.home.server.respository;
+package com.nursing.home.server.repository;
 
 import com.nursing.home.server.entity.Hospital;
 import org.springframework.data.jpa.repository.EntityGraph;

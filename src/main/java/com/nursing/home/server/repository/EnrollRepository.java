@@ -1,4 +1,4 @@
-package com.nursing.home.server.respository;
+package com.nursing.home.server.repository;
 
 import com.nursing.home.server.dto.enroll.EnrollReadResponse;
 import com.nursing.home.server.entity.Enroll;
