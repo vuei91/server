@@ -40,7 +40,7 @@ public class Member {
 
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    List<Relation> relations = new ArrayList<>();
+    List<Relation> relations;
 
     public Member(MemberCreateRequest memberCreateRequest) {
         this.username = memberCreateRequest.getUsername();

@@ -22,7 +22,7 @@ public class HospitalCUDResponse {
     private String address;
     // 진료시간
     @Setter
-    private List<ClinicHoursCUDResponse> clinicHoursCUDResponseList = new ArrayList<>();
+    private List<ClinicHoursCUDResponse> clinicHoursCUDResponseList;
     // 위도
     private String latitude;
     // 경도

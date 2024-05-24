@@ -37,18 +37,18 @@ public class Hospital {
     private String parking;
 
     @OneToMany(mappedBy = "hospital")
-    private List<ClinicHours> clinicHoursList = new ArrayList<>();
+    private List<ClinicHours> clinicHoursList;
     // 위도
     private String latitude;
     // 경도
     private String longitude;
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
     @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "hospital")
-    List<Enroll> enrolls = new ArrayList<>();
+    List<Enroll> enrolls;
 
     public Hospital(HospitalCreateRequest request) {
         this.name = request.getName();
