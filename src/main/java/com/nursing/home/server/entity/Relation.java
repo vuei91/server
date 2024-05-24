@@ -31,10 +31,10 @@ public class Relation {
     private Patient patient;
 
     @OneToMany(mappedBy = "relation")
-    private List<Enroll> enrolls = new ArrayList<>();
+    private List<Enroll> enrolls;
 
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
-    private final LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
     @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
-    private final LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime updatedAt;
 }
