@@ -25,6 +25,8 @@ public class Patient {
     @Column(unique = true)
     private String phone;
     private String address;
+    private String latitude;
+    private String longitude;
     private String grade;
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
     private final LocalDateTime createdAt = LocalDateTime.now();
@@ -39,6 +41,8 @@ public class Patient {
         this.phone = request.getPhone();
         this.address = request.getAddress();
         this.grade = request.getGrade();
+        this.latitude = request.getLatitude();
+        this.longitude = request.getLongitude();
     }
 
     public void update(PatientUpdateRequest request) {
@@ -46,5 +50,7 @@ public class Patient {
         if(request.getAddress() != null) this.address = request.getAddress();
         if(request.getPhone() != null) this.phone = request.getPhone();
         if(request.getGrade() != null) this.grade = request.getGrade();
+        if(request.getLatitude() != null) this.grade = request.getLatitude();
+        if(request.getLongitude() != null) this.grade = request.getLongitude();
     }
 }

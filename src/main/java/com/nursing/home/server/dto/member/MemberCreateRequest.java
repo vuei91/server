@@ -20,4 +20,6 @@ public class MemberCreateRequest {
     @Email
     private String email;
     private String address;
+    private String latitude;
+    private String longitude;
 }

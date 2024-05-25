@@ -13,4 +13,6 @@ public class PatientUpdateRequest {
     private String address;
     private String memberUsername;
     private String grade;
+    private String latitude;
+    private String longitude;
 }

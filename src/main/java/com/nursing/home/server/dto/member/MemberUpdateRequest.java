@@ -18,4 +18,6 @@ public class MemberUpdateRequest {
     @Email
     private String email;
     private String address;
+    private String longitude;
+    private String latitude;
 }

@@ -13,4 +13,6 @@ public class PatientCreateRequest {
     private String phone;
     private String address;
     private String grade;
+    private String longitude;
+    private String latitude;
 }
