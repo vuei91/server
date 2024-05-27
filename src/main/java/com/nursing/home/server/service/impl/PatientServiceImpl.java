@@ -1,5 +1,6 @@
 package com.nursing.home.server.service.impl;
 
+import com.nursing.home.server.common.GlobalStorage;
 import com.nursing.home.server.dto.patient.PatientCreateRequest;
 import com.nursing.home.server.dto.patient.PatientCUDResponse;
 import com.nursing.home.server.dto.patient.PatientUpdateRequest;
@@ -15,8 +16,6 @@ import com.nursing.home.server.repository.RelationRepository;
 import com.nursing.home.server.service.PatientService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,8 +28,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     @Transactional
     public PatientCUDResponse createPatient(PatientCreateRequest request) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        String username = securityContext.getAuthentication().getName();
+        String username = GlobalStorage.getUsername();
         Member member = memberRepository
                 .findByUsername(username)
                 .orElseThrow(NotFoundMemberException::new);

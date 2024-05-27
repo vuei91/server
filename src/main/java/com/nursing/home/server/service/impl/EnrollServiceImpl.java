@@ -1,5 +1,6 @@
 package com.nursing.home.server.service.impl;
 
+import com.nursing.home.server.common.GlobalStorage;
 import com.nursing.home.server.dto.enroll.EnrollCUDResponse;
 import com.nursing.home.server.dto.enroll.EnrollCreateRequest;
 import com.nursing.home.server.dto.enroll.EnrollReadResponse;
@@ -9,8 +10,6 @@ import com.nursing.home.server.repository.*;
 import com.nursing.home.server.service.EnrollService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,22 +26,19 @@ public class EnrollServiceImpl implements EnrollService {
 
     @Override
     public List<EnrollReadResponse> getEnrolls() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        String username = securityContext.getAuthentication().getName();
+        String username = GlobalStorage.getUsername();
         return enrollRepository.findEnrollsByUsername(username);
     }
 
     @Override
     public List<EnrollReadResponse> getEnrollsByHospital(Long hospitalId) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        String username = securityContext.getAuthentication().getName();
+        String username = GlobalStorage.getUsername();
         return enrollRepository.findEnrollsByUsernameAndHospital(username, hospitalId);
     }
 
     @Override
     public List<EnrollReadResponse> getEnrollLsByPatient(Long patientId) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        String username = securityContext.getAuthentication().getName();
+        String username = GlobalStorage.getUsername();
         return enrollRepository.findEnrollsByUsernameAndPatient(username, patientId);
     }
 
@@ -50,16 +46,14 @@ public class EnrollServiceImpl implements EnrollService {
 
     @Override
     public EnrollReadResponse getEnrollByHospitalAndPatient(Long hospitalId, Long patientId) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        String username = securityContext.getAuthentication().getName();
+        String username = GlobalStorage.getUsername();
         return enrollRepository.findEnrollByUsernameAndHospitalAndPatient(username, hospitalId, patientId);
     }
 
     @Override
     @Transactional
     public List<EnrollCUDResponse> createEnrolls(EnrollCreateRequest request) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        String username = securityContext.getAuthentication().getName();
+        String username = GlobalStorage.getUsername();
         List<Long> patientIds = request.getPatientIds();
         List<EnrollCUDResponse> enrolls = new ArrayList<>();
         Member member = memberRepository

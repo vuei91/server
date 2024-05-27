@@ -1,5 +1,6 @@
 package com.nursing.home.server.service.impl;
 
+import com.nursing.home.server.common.GlobalStorage;
 import com.nursing.home.server.dto.member.MemberCUDResponse;
 import com.nursing.home.server.dto.member.MemberCreateRequest;
 import com.nursing.home.server.dto.member.MemberReadResponse;
@@ -11,8 +12,6 @@ import com.nursing.home.server.repository.MemberRepository;
 import com.nursing.home.server.repository.PatientRepository;
 import com.nursing.home.server.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +26,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberReadResponse getMember() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        String username = securityContext.getAuthentication().getName();
+        String username = GlobalStorage.getUsername();
         Member member = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
         List<Patient> patients = patientRepository.findAllByRelationsIn(member.getRelations());
         return new MemberReadResponse(member, patients);
