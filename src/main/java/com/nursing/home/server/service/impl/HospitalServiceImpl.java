@@ -13,7 +13,6 @@ import com.nursing.home.server.service.RedisService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,8 +33,7 @@ public class HospitalServiceImpl implements HospitalService {
         String redisData = redisService.getKeyUsername();
         Map<String,String> resultMap = gson.fromJson(redisData, new TypeToken<Map<String, String>>() {
         }.getType());
-        List<HospitalResponseForList> hospitals = hospitalRepository.findAllForList(resultMap.get("longitude"), resultMap.get("latitude"));
-        return hospitals;
+        return hospitalRepository.findAllForList(resultMap.get("longitude"), resultMap.get("latitude"));
     }
 
     @Override

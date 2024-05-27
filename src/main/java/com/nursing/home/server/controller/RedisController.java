@@ -3,7 +3,6 @@ package com.nursing.home.server.controller;
 import com.nursing.home.server.common.ApiResponse;
 import com.nursing.home.server.service.impl.RedisServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -13,7 +12,6 @@ import java.util.Map;
 @RequestMapping("/redis")
 public class RedisController {
 
-    private final RedisTemplate<String, String> redisTemplate;
     private final RedisServiceImpl redisService;
 
     @PostMapping("/username")
