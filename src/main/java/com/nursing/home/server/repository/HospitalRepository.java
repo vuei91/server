@@ -1,13 +1,21 @@
 package com.nursing.home.server.repository;
 
+import com.nursing.home.server.dto.hospital.HospitalResponseForList;
 import com.nursing.home.server.entity.Hospital;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface HospitalRepository extends JpaRepository<Hospital, Long> {
-    @Override
-    @EntityGraph(attributePaths = {"clinicHoursList"})
-    List<Hospital> findAll();
+    @Query(" select " +
+            "   h.id as id, " +
+            "   h.address as address, " +
+            "   h.name as name, " +
+            "   CAST(function('ST_distance_sphere', POINT(h.longitude, h.latitude), POINT(:x, :y)) as double) / 1000 as distance " +
+            " from Hospital h" +
+            " order by CAST(function('ST_distance_sphere', POINT(h.longitude, h.latitude), POINT(:x, :y)) as double) / 1000")
+    List<HospitalResponseForList> findAllForList(String x, String y);
+
+    // function('ST_distance_sphere', POINT(h.longitude, h.latitude), POINT(:x, :y))
 }

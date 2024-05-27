@@ -1,5 +1,7 @@
 package com.nursing.home.server.service.impl;
 
+import com.nimbusds.jose.shaded.gson.Gson;
+import com.nimbusds.jose.shaded.gson.reflect.TypeToken;
 import com.nursing.home.server.dto.hospital.*;
 import com.nursing.home.server.entity.ClinicHours;
 import com.nursing.home.server.entity.Hospital;
@@ -7,13 +9,16 @@ import com.nursing.home.server.exception.NotFoundMemberException;
 import com.nursing.home.server.repository.ClinicHoursRepository;
 import com.nursing.home.server.repository.HospitalRepository;
 import com.nursing.home.server.service.HospitalService;
+import com.nursing.home.server.service.RedisService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -21,14 +26,16 @@ import java.util.List;
 public class HospitalServiceImpl implements HospitalService {
     private final HospitalRepository hospitalRepository;
     private final ClinicHoursRepository clinicHoursRepository;
+    private final RedisService redisService;
+    private final Gson gson = new Gson();
 
     @Override
-    public List<HospitalReadResponse> getHospitals() {
-        List<Hospital> hospitals = hospitalRepository.findAll();
-        return hospitals
-                .stream()
-                .map(HospitalReadResponse::new)
-                .toList();
+    public List<HospitalResponseForList> getHospitals() {
+        String redisData = redisService.getKeyUsername();
+        Map<String,String> resultMap = gson.fromJson(redisData, new TypeToken<Map<String, String>>() {
+        }.getType());
+        List<HospitalResponseForList> hospitals = hospitalRepository.findAllForList(resultMap.get("longitude"), resultMap.get("latitude"));
+        return hospitals;
     }
 
     @Override

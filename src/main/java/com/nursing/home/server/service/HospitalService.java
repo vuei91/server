@@ -1,15 +1,12 @@
 package com.nursing.home.server.service;
 
-import com.nursing.home.server.dto.hospital.HospitalCreateRequest;
-import com.nursing.home.server.dto.hospital.HospitalCUDResponse;
-import com.nursing.home.server.dto.hospital.HospitalReadResponse;
-import com.nursing.home.server.dto.hospital.HospitalUpdateRequest;
+import com.nursing.home.server.dto.hospital.*;
 
 import java.util.List;
 
 public interface HospitalService {
 
-    List<HospitalReadResponse> getHospitals();
+    List<HospitalResponseForList> getHospitals();
 
     HospitalReadResponse getHospital(Long id);
 

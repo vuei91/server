@@ -1,10 +1,7 @@
 package com.nursing.home.server.controller;
 
 import com.nursing.home.server.common.ApiResponse;
-import com.nursing.home.server.dto.hospital.HospitalCreateRequest;
-import com.nursing.home.server.dto.hospital.HospitalCUDResponse;
-import com.nursing.home.server.dto.hospital.HospitalReadResponse;
-import com.nursing.home.server.dto.hospital.HospitalUpdateRequest;
+import com.nursing.home.server.dto.hospital.*;
 import com.nursing.home.server.service.impl.HospitalServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +17,7 @@ public class HospitalController {
     private final HospitalServiceImpl hospitalService;
 
     @GetMapping("/list")
-    public ApiResponse<List<HospitalReadResponse>> getHospitals() {
+    public ApiResponse<List<HospitalResponseForList>> getHospitals() {
         return ApiResponse.ok(hospitalService.getHospitals());
     }
 
