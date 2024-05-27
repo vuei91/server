@@ -9,7 +9,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -17,6 +17,12 @@ spring:
     show-sql: true
   jwt:
     secret: ${JWT_SECRET}
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
 
   security:
     oauth2:
@@ -55,6 +61,8 @@ logging:
 
 frontend:
   url: ${FRONTEND_URL}
+
+
 
 #server:
 #  address: 172.30.1.7
