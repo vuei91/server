@@ -31,9 +31,15 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public List<HospitalResponseForList> getHospitals() {
         String redisData = redisService.getKeyUsername();
-        Map<String,String> resultMap = gson.fromJson(redisData, new TypeToken<Map<String, String>>() {
-        }.getType());
-        return hospitalRepository.findAllForList(resultMap.get("longitude"), resultMap.get("latitude"));
+        String longitude = null;
+        String latitude = null;
+        if(redisData != null) {
+            Map<String,String> resultMap = gson.fromJson(redisData, new TypeToken<Map<String, String>>() {
+            }.getType());
+            longitude = resultMap.get("longitude");
+            latitude = resultMap.get("latitude");
+        }
+        return hospitalRepository.findAllForList(longitude, latitude);
     }
 
     @Override
