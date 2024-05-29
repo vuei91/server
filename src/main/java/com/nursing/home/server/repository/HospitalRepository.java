@@ -12,7 +12,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long> {
             "   h.id as id, " +
             "   h.address as address, " +
             "   h.name as name, " +
-            "   CAST(function('ST_distance_sphere', POINT(h.longitude, h.latitude), POINT(:x, :y)) as double) / 1000 as distance " +
+            "   case when :x is null then '-' when :y is null then '-' else ROUND(CAST(function('ST_distance_sphere', POINT(h.longitude, h.latitude), POINT(:x, :y)) as double) / 1000, 2) end as distance " +
             " from Hospital h" +
             " order by CAST(function('ST_distance_sphere', POINT(h.longitude, h.latitude), POINT(:x, :y)) as double) / 1000")
     List<HospitalResponseForList> findAllForList(String x, String y);
