@@ -1,16 +1,13 @@
 package com.nursing.home.server.entity;
 
 import com.nursing.home.server.dto.hospital.ClinicHoursCreateRequest;
-import com.nursing.home.server.dto.hospital.HospitalCreateRequest;
 import com.nursing.home.server.dto.hospital.HospitalUpdateRequest;
 import jakarta.persistence.*;
 import lombok.Data;
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @Data
@@ -41,7 +38,4 @@ public class ClinicHours {
         this.hospital = hospital;
     }
 
-    public void update(HospitalUpdateRequest request) {
-
-    }
 }
