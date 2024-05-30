@@ -1,15 +1,15 @@
 package com.nursing.home.server.service.impl;
 
 import com.nursing.home.server.common.GlobalStorage;
-import com.nursing.home.server.dto.patient.PatientCreateRequest;
 import com.nursing.home.server.dto.patient.PatientCUDResponse;
+import com.nursing.home.server.dto.patient.PatientCreateRequest;
+import com.nursing.home.server.dto.patient.PatientReadResponse;
 import com.nursing.home.server.dto.patient.PatientUpdateRequest;
 import com.nursing.home.server.entity.Member;
 import com.nursing.home.server.entity.Patient;
 import com.nursing.home.server.entity.Relation;
 import com.nursing.home.server.exception.NotFoundMemberException;
 import com.nursing.home.server.exception.NotFoundPatientException;
-import com.nursing.home.server.exception.NotFoundRelationException;
 import com.nursing.home.server.repository.MemberRepository;
 import com.nursing.home.server.repository.PatientRepository;
 import com.nursing.home.server.repository.RelationRepository;
@@ -18,12 +18,20 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
     private final MemberRepository memberRepository;
     private final PatientRepository patientRepository;
     private final RelationRepository relationRepository;
+
+    @Override
+    public PatientReadResponse getPatient(Long id) {
+        Patient patient = patientRepository.findById(id).orElseThrow(NotFoundPatientException::new);
+        return new PatientReadResponse(patient);
+    }
 
     @Override
     @Transactional
@@ -45,25 +53,23 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional
-    public PatientCUDResponse deletePatient(Long id) {
+    public Integer deletePatient(Long id) {
         Patient patient = patientRepository.findById(id).orElseThrow(NotFoundPatientException::new);
         patientRepository.delete(patient);
-        return new PatientCUDResponse(patient);
+        String username = GlobalStorage.getUsername();
+        Long memberId = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new).getId();
+        List<Relation> relations = relationRepository.findAllByMemberId(memberId);
+        System.out.println(relations.size());
+        return relations.size();
     }
 
     @Override
     @Transactional
-    public PatientCUDResponse updatePatient(Long id, String username, PatientUpdateRequest request) {
+    public PatientCUDResponse updatePatient(Long id, PatientUpdateRequest request) {
         Patient updatedPatient = patientRepository.findById(id).orElseThrow(NotFoundPatientException::new);
-        if(username != null) {
-            Member oldMember = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new);
-            Member newMember = memberRepository.findByUsername(request.getMemberUsername()).orElseThrow(NotFoundMemberException::new);
-            Relation relation = relationRepository.findByMemberIdAndPatientId(oldMember.getId(), updatedPatient.getId()).orElseThrow(NotFoundRelationException::new);
-            relation.setMember(newMember);
-            relationRepository.save(relation);
-        }
         updatedPatient.update(request);
         Patient patient = patientRepository.save(updatedPatient);
         return new PatientCUDResponse(patient);
     }
+
 }
