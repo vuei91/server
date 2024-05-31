@@ -1,9 +1,7 @@
 package com.nursing.home.server.controller;
 
 import com.nursing.home.server.common.ApiResponse;
-import com.nursing.home.server.dto.enroll.EnrollCUDResponse;
-import com.nursing.home.server.dto.enroll.EnrollCreateRequest;
-import com.nursing.home.server.dto.enroll.EnrollReadResponse;
+import com.nursing.home.server.dto.enroll.*;
 import com.nursing.home.server.service.impl.EnrollServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +19,18 @@ public class EnrollController {
     private final EnrollServiceImpl enrollServiceImpl;
 
     @GetMapping("/")
-    public ApiResponse<List<EnrollReadResponse>> getEnrolls() {
-        return ApiResponse.ok(enrollServiceImpl.getEnrolls());
+    public ApiResponse<List<EnrollHistoryMainResponse>> getEnrollHistoryMainList() {
+        return ApiResponse.ok(enrollServiceImpl.getEnrollHistoryMainList());
     }
 
-    @GetMapping("/{hospitalId}")
+    @GetMapping("/{patientId}")
+    public ApiResponse<List<EnrollHistoryDetailResponse>> getEnrollHistoryDetail(@PathVariable Long patientId) {
+        return ApiResponse.ok(enrollServiceImpl.getEnrollHistoryDetail(patientId));
+    }
+
+    @GetMapping("/hospital/{hospitalId}")
     public ApiResponse<List<EnrollReadResponse>> getEnrollLsByHospital(@PathVariable Long hospitalId) {
         return ApiResponse.ok(enrollServiceImpl.getEnrollsByHospital(hospitalId));
-    }
-
-    @GetMapping("/{hospitalId}/{patientId}")
-    public ApiResponse<EnrollReadResponse> getEnrollByHospitalAndPatient(@PathVariable Long hospitalId, @PathVariable Long patientId) {
-        return ApiResponse.ok(enrollServiceImpl.getEnrollByHospitalAndPatient(hospitalId, patientId));
     }
 
     @GetMapping("/patient/{patientId}")

@@ -1,9 +1,7 @@
 package com.nursing.home.server.service.impl;
 
 import com.nursing.home.server.common.GlobalStorage;
-import com.nursing.home.server.dto.enroll.EnrollCUDResponse;
-import com.nursing.home.server.dto.enroll.EnrollCreateRequest;
-import com.nursing.home.server.dto.enroll.EnrollReadResponse;
+import com.nursing.home.server.dto.enroll.*;
 import com.nursing.home.server.entity.*;
 import com.nursing.home.server.exception.*;
 import com.nursing.home.server.repository.*;
@@ -25,9 +23,15 @@ public class EnrollServiceImpl implements EnrollService {
     private final RelationRepository relationRepository;
 
     @Override
-    public List<EnrollReadResponse> getEnrolls() {
+    public List<EnrollHistoryMainResponse> getEnrollHistoryMainList() {
         String username = GlobalStorage.getUsername();
-        return enrollRepository.findEnrollsByUsername(username);
+        return enrollRepository.findHistoryMainList(username);
+    }
+
+    @Override
+    public List<EnrollHistoryDetailResponse> getEnrollHistoryDetail(Long patientId) {
+        String username = GlobalStorage.getUsername();
+        return enrollRepository.findHistoryDetailList(username, patientId);
     }
 
     @Override
@@ -40,14 +44,6 @@ public class EnrollServiceImpl implements EnrollService {
     public List<EnrollReadResponse> getEnrollLsByPatient(Long patientId) {
         String username = GlobalStorage.getUsername();
         return enrollRepository.findEnrollsByUsernameAndPatient(username, patientId);
-    }
-
-
-
-    @Override
-    public EnrollReadResponse getEnrollByHospitalAndPatient(Long hospitalId, Long patientId) {
-        String username = GlobalStorage.getUsername();
-        return enrollRepository.findEnrollByUsernameAndHospitalAndPatient(username, hospitalId, patientId);
     }
 
     @Override
