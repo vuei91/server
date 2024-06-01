@@ -25,14 +25,16 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
         if(oAuthClientName.equals("kakao")) {
             username = "kakao_"+oAuth2User.getAttributes().get("id");
-            member = Member.builder().username(username).type("kakao").build();
+            String name = (String)((Map<String, Object>) oAuth2User.getAttributes().get("properties")).get("nickname");
+            member = Member.builder().username(username).type("kakao").name(name).build();
         }
 
         if(oAuthClientName.equals("naver")) {
             Map<String, String> responseMap = (Map<String, String>) oAuth2User.getAttributes().get("response");
             username = "naver_" + responseMap.get("id").substring(0,14);
             String email = responseMap.get("email");
-            member = Member.builder().username(username).type("naver").email(email).build();
+            String name = responseMap.get("name");
+            member = Member.builder().username(username).type("naver").email(email).name(name).build();
         }
 
         Member newMember;
