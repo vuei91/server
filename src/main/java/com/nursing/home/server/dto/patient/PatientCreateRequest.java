@@ -12,7 +12,7 @@ public class PatientCreateRequest {
     private String name;
     private String phone;
     private String address;
-    private String grade;
+    private Integer grade;
     private String longitude;
     private String latitude;
 }

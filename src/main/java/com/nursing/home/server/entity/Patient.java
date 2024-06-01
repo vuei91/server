@@ -27,7 +27,7 @@ public class Patient {
     private String address;
     private String latitude;
     private String longitude;
-    private String grade;
+    private Integer grade;
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
     private final LocalDateTime createdAt = LocalDateTime.now();
     @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
@@ -50,7 +50,7 @@ public class Patient {
         if(request.getAddress() != null) this.address = request.getAddress();
         if(request.getPhone() != null) this.phone = request.getPhone();
         if(request.getGrade() != null) this.grade = request.getGrade();
-        if(request.getLatitude() != null) this.grade = request.getLatitude();
-        if(request.getLongitude() != null) this.grade = request.getLongitude();
+        if(request.getLatitude() != null) this.longitude = request.getLatitude();
+        if(request.getLongitude() != null) this.longitude = request.getLongitude();
     }
 }
