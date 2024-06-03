@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,10 +31,10 @@ public class Relation {
     private Patient patient;
 
     @OneToMany(mappedBy = "relation")
-    private List<Enroll> enrolls;
+    private List<Enroll> enrolls = new ArrayList<>();
 
-    @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
-    private LocalDateTime createdAt ;
-    @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
-    private LocalDateTime updatedAt;
+    @CreationTimestamp 
+    private final LocalDateTime createdAt = LocalDateTime.now(); ;
+    @UpdateTimestamp 
+    private final LocalDateTime updatedAt = LocalDateTime.now();;
 }

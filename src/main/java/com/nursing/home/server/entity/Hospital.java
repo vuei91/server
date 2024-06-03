@@ -22,33 +22,26 @@ public class Hospital {
     @GeneratedValue
     @Column(name="hospital_id")
     private Long id;
-    // 병원이름
     private String name;
     private String category;
-    // 병원전화번호
     private String tel;
-    // 병원 주소
     private String address;
-    // 병원 웹사이트
     private String website;
     private String subject;
     private String doctors;
     private String convenience;
     private String parking;
-
     @OneToMany(mappedBy = "hospital")
     private List<ClinicHours> clinicHoursList;
-    // 위도
     private String latitude;
-    // 경도
     private String longitude;
-    @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
-    private LocalDateTime createdAt;
-    @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
-    private LocalDateTime updatedAt;
+    @CreationTimestamp 
+    private final LocalDateTime createdAt = LocalDateTime.now();
+    @UpdateTimestamp
+    private final LocalDateTime updatedAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "hospital")
-    List<Enroll> enrolls;
+    List<Enroll> enrolls = new ArrayList<>();
 
     public Hospital(HospitalCreateRequest request) {
         this.name = request.getName();

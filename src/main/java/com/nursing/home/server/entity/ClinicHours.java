@@ -1,9 +1,10 @@
 package com.nursing.home.server.entity;
 
 import com.nursing.home.server.dto.hospital.ClinicHoursCreateRequest;
-import com.nursing.home.server.dto.hospital.HospitalUpdateRequest;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ClinicHours {
     @Id
     @GeneratedValue
@@ -23,12 +25,10 @@ public class ClinicHours {
     private String weekTime;
     private String deadlineTime;
     private String breakTime;
-    @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
+    @CreationTimestamp 
     private final LocalDateTime createdAt = LocalDateTime.now();
-    @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
+    @UpdateTimestamp 
     private final LocalDateTime updatedAt = LocalDateTime.now();
-
-    public ClinicHours () {}
 
     public ClinicHours (ClinicHoursCreateRequest request, Hospital hospital) {
         this.weekName = request.getWeekName();
@@ -37,5 +37,4 @@ public class ClinicHours {
         this.breakTime = request.getBreakTime();
         this.hospital = hospital;
     }
-
 }

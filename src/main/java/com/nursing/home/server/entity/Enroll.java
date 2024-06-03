@@ -38,9 +38,9 @@ public class Enroll {
     private LocalDateTime startTime;
     private EnrollStatus enrollStatus; // ENROLL, CALL, CONTRACT, DEPOSIT, COMPLETE
 
-    @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
+    @CreationTimestamp 
     private final LocalDateTime createdAt = LocalDateTime.now();
-    @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
+    @UpdateTimestamp 
     private final LocalDateTime updatedAt = LocalDateTime.now();
 
     public Enroll(Hospital hospital, Relation relation, EnrollCreateRequest request) {

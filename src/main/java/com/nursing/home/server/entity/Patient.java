@@ -29,9 +29,9 @@ public class Patient {
     private String latitude;
     private String longitude;
     private Integer grade;
-    @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
+    @CreationTimestamp 
     private final LocalDateTime createdAt = LocalDateTime.now();
-    @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
+    @UpdateTimestamp 
     private final LocalDateTime updatedAt = LocalDateTime.now();
     
     @OneToMany(mappedBy = "patient")
