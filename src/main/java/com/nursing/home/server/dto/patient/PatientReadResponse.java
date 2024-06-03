@@ -10,6 +10,7 @@ public class PatientReadResponse {
     private String phone;
     private Integer grade;
     private String address;
+    private String detailAddress;
 
     public PatientReadResponse(Patient patient) {
         this.id = patient.getId();
@@ -17,5 +18,6 @@ public class PatientReadResponse {
         this.phone = patient.getPhone();
         this.grade = patient.getGrade();
         this.address = patient.getAddress();
+        this.detailAddress = patient.getDetailAddress();
     }
 }

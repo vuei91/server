@@ -14,6 +14,7 @@ public class PatientCUDResponse {
     private String phone;
     private Integer grade;
     private String address;
+    private String detailAddress;
 
     public PatientCUDResponse(Patient patient) {
         this.id = patient.getId();
@@ -21,5 +22,6 @@ public class PatientCUDResponse {
         this.phone = patient.getPhone();
         this.grade = patient.getGrade();
         this.address = patient.getAddress();
+        this.detailAddress = patient.getDetailAddress();
     }
 }

@@ -15,4 +15,5 @@ public class PatientCreateRequest {
     private Integer grade;
     private String longitude;
     private String latitude;
+    private String detailAddress;
 }

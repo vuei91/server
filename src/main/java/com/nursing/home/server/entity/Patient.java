@@ -25,6 +25,7 @@ public class Patient {
     @Column(unique = true)
     private String phone;
     private String address;
+    private String detailAddress;
     private String latitude;
     private String longitude;
     private Integer grade;
@@ -43,6 +44,7 @@ public class Patient {
         this.grade = request.getGrade();
         this.latitude = request.getLatitude();
         this.longitude = request.getLongitude();
+        this.detailAddress = request.getDetailAddress();
     }
 
     public void update(PatientUpdateRequest request) {
@@ -52,5 +54,6 @@ public class Patient {
         if(request.getGrade() != null) this.grade = request.getGrade();
         if(request.getLatitude() != null) this.longitude = request.getLatitude();
         if(request.getLongitude() != null) this.longitude = request.getLongitude();
+        if(request.getDetailAddress() != null) this.detailAddress = request.getDetailAddress();
     }
 }

@@ -34,7 +34,7 @@ public class Relation {
     private List<Enroll> enrolls;
 
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt ;
     @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
     private LocalDateTime updatedAt;
 }
