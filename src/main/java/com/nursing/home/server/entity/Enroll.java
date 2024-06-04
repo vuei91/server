@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class Enroll {
 
     public enum EnrollStatus {
-        ENROLL, CALL, CONTRACT, DEPOSIT, COMPLETE, CANCLE
+        ENROLL, CALL, CONTRACT, DEPOSIT, COMPLETE, CANCEL
     }
 
     @Id
@@ -36,7 +36,7 @@ public class Enroll {
     private Relation relation;
 
     private LocalDateTime startTime;
-    private EnrollStatus enrollStatus; // ENROLL, CALL, CONTRACT, DEPOSIT, COMPLETE
+    private EnrollStatus enrollStatus;
 
     @CreationTimestamp 
     private final LocalDateTime createdAt = LocalDateTime.now();
@@ -51,7 +51,7 @@ public class Enroll {
     }
 
     public void cancel() {
-        this.enrollStatus = EnrollStatus.CANCLE;
+        this.enrollStatus = EnrollStatus.CANCEL;
     }
 
     public void progress() {
@@ -65,7 +65,7 @@ public class Enroll {
             this.enrollStatus = EnrollStatus.COMPLETE;
         } else if (this.enrollStatus == EnrollStatus.COMPLETE) {
             throw new ProgressFaultException();
-        } else if(this.enrollStatus == EnrollStatus.CANCLE) {
+        } else if(this.enrollStatus == EnrollStatus.CANCEL) {
             throw new ProgressCancelException();
         }
     }

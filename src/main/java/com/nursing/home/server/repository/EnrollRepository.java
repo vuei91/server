@@ -75,7 +75,10 @@ public interface EnrollRepository extends JpaRepository<Enroll, Long> {
                 "p.id as patientId, " +
                 "p.name as patientName, " +
                 "(select h1.name from Hospital h1 where h1.id = min(h.id)) as hospitalName, " +
-                "(select e1.enrollStatus from Enroll e1 where e1.hospital.id = min(h.id)) as enrollStatus, " +
+                "(select e1.enrollStatus from Enroll e1 where e1.hospital.id = min(h.id)" +
+                    "and e1.relation = (" +
+                    "select r1 from Relation r1 where r1.patient = p)" +
+                    ") as enrollStatus, " +
                 "count(e.hospital) - 1 as exceptCount " +
             " from Member m" +
             " join fetch Relation r on m = r.member" +

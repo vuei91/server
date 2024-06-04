@@ -34,7 +34,7 @@ public class Relation {
     private List<Enroll> enrolls = new ArrayList<>();
 
     @CreationTimestamp 
-    private final LocalDateTime createdAt = LocalDateTime.now(); ;
+    private final LocalDateTime createdAt = LocalDateTime.now();
     @UpdateTimestamp 
-    private final LocalDateTime updatedAt = LocalDateTime.now();;
+    private final LocalDateTime updatedAt = LocalDateTime.now();
 }

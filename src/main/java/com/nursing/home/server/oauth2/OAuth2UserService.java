@@ -34,7 +34,8 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             username = "naver_" + responseMap.get("id").substring(0,14);
             String email = responseMap.get("email");
             String name = responseMap.get("name");
-            member = Member.builder().username(username).type("naver").email(email).name(name).build();
+            String phone = responseMap.get("mobile");
+            member = Member.builder().username(username).type("naver").email(email).name(name).phone(phone).build();
         }
 
         Member newMember;

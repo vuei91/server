@@ -40,7 +40,11 @@ spring:
             client-secret: ${NAVER_CLIENT_SECRET}
             redirect-uri: '{baseUrl}/oauth2/callback/{registrationId}'
             authorization-grant-type: authorization_code
-            scope: email
+            scope:
+              - email
+              - name
+              - mobile
+              - nick_name
         provider:
           kakao:
             authorization-uri: https://kauth.kakao.com/oauth/authorize
