@@ -3,9 +3,11 @@ package com.nursing.home.server.dto.patient;
 import com.nursing.home.server.entity.Patient;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 public class PatientReadResponse {
-    private Long id;
+    private UUID id;
     private String name;
     private String phone;
     private Integer grade;

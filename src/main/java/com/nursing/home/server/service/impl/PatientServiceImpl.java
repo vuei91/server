@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class PatientServiceImpl implements PatientService {
     private final RelationRepository relationRepository;
 
     @Override
-    public PatientReadResponse getPatient(Long id) {
+    public PatientReadResponse getPatient(UUID id) {
         Patient patient = patientRepository.findById(id).orElseThrow(NotFoundPatientException::new);
         return new PatientReadResponse(patient);
     }
@@ -53,11 +54,11 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional
-    public Integer deletePatient(Long id) {
+    public Integer deletePatient(UUID id) {
         Patient patient = patientRepository.findById(id).orElseThrow(NotFoundPatientException::new);
         patientRepository.delete(patient);
         String username = GlobalStorage.getUsername();
-        Long memberId = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new).getId();
+        UUID memberId = memberRepository.findByUsername(username).orElseThrow(NotFoundMemberException::new).getId();
         List<Relation> relations = relationRepository.findAllByMemberId(memberId);
         System.out.println(relations.size());
         return relations.size();
@@ -65,7 +66,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional
-    public PatientCUDResponse updatePatient(Long id, PatientUpdateRequest request) {
+    public PatientCUDResponse updatePatient(UUID id, PatientUpdateRequest request) {
         Patient updatedPatient = patientRepository.findById(id).orElseThrow(NotFoundPatientException::new);
         updatedPatient.update(request);
         Patient patient = patientRepository.save(updatedPatient);

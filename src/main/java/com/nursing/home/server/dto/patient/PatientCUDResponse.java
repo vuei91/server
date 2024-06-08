@@ -3,13 +3,15 @@ package com.nursing.home.server.dto.patient;
 import com.nursing.home.server.entity.Patient;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientCUDResponse {
-    private Long id;
+    private UUID id;
     private String name;
     private String phone;
     private Integer grade;

@@ -6,9 +6,11 @@ import com.nursing.home.server.exception.ProgressFaultException;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,9 +25,10 @@ public class Enroll {
     }
 
     @Id
-    @GeneratedValue
-    @Column(name = "enroll_id")
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2")
+    @Column(columnDefinition = "BINARY(16)", name = "enroll_id")
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")

@@ -5,11 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 @AllArgsConstructor
 @Builder
 public class ClinicHoursCUDResponse {
-    private Long id;
+    private UUID id;
     private String weekName;
     private String weekTime;
     private String deadlineTime;

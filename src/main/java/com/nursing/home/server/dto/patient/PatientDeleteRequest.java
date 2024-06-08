@@ -5,9 +5,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 @ToString
 public class PatientDeleteRequest {
-    private Long id;
+    private UUID id;
 }

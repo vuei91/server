@@ -6,12 +6,13 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @ToString
 public class EnrollCreateRequest {
-    private List<Long> patientIds;
-    private Long hospitalId;
+    private List<UUID> patientIds;
+    private UUID hospitalId;
     private LocalDateTime startTime;
 }

@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/patient")
@@ -17,7 +19,7 @@ public class PatientController {
     private final PatientServiceImpl patientServiceImpl;
 
     @GetMapping("/{id}")
-    public ApiResponse<PatientReadResponse> getPatient(@PathVariable Long id) {
+    public ApiResponse<PatientReadResponse> getPatient(@PathVariable UUID id) {
         return ApiResponse.ok(patientServiceImpl.getPatient(id));
     }
 
@@ -27,12 +29,12 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<PatientCUDResponse> updatePatient(@PathVariable Long id, @RequestBody @Valid PatientUpdateRequest request) {
+    public ApiResponse<PatientCUDResponse> updatePatient(@PathVariable UUID id, @RequestBody @Valid PatientUpdateRequest request) {
         return ApiResponse.ok(patientServiceImpl.updatePatient(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Integer> deletePatient(@PathVariable Long id) {
+    public ApiResponse<Integer> deletePatient(@PathVariable UUID id) {
         return ApiResponse.ok(patientServiceImpl.deletePatient(id));
     }
 }

@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface RelationRepository extends JpaRepository<Relation, Long> {
-    Optional<Relation> findByMemberIdAndPatientId(Long memberId, Long patientId);
-    List<Relation> findAllByMemberId(Long memberId);
+public interface RelationRepository extends JpaRepository<Relation, UUID> {
+    Optional<Relation> findByMemberIdAndPatientId(UUID memberId, UUID patientId);
+    List<Relation> findAllByMemberId(UUID memberId);
 }

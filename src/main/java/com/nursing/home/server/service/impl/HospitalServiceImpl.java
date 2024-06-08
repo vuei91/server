@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -43,7 +44,7 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public HospitalReadResponse getHospital(Long id) {
+    public HospitalReadResponse getHospital(UUID id) {
         Hospital hospital = hospitalRepository.findById(id).orElseThrow(NotFoundMemberException::new);
         return new HospitalReadResponse(hospital);
     }
@@ -68,7 +69,7 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     @Transactional
-    public HospitalCUDResponse deleteHospital(Long id) {
+    public HospitalCUDResponse deleteHospital(UUID id) {
         Hospital hospital = hospitalRepository.findById(id).orElseThrow(() -> new RuntimeException("없는 병원입니다"));
         hospitalRepository.delete(hospital);
         return new HospitalCUDResponse(hospital);
@@ -76,7 +77,7 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     @Transactional
-    public HospitalCUDResponse updateHospital(Long id, HospitalUpdateRequest request) {
+    public HospitalCUDResponse updateHospital(UUID id, HospitalUpdateRequest request) {
         Hospital hospital = hospitalRepository.findById(id).orElseThrow(() -> new RuntimeException("없는 병원입니다"));
 //        ClinicHours updatedClinicHours = clinicHoursRepository.findById(hospital.getClinicHours().getId()).orElseThrow(() -> new RuntimeException("없는 진료시간입니다"));
 //        updatedClinicHours.update(request);

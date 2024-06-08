@@ -1,7 +1,9 @@
 package com.nursing.home.server.dto.hospital;
 
+import java.util.UUID;
+
 public interface HospitalResponseForList {
-    Long getId();
+    UUID getId();
     String getName();
     String getDistance();
     String getAddress();

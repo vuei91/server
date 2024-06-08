@@ -6,11 +6,13 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Setter
@@ -20,9 +22,10 @@ import java.util.List;
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"member_id", "patient_id"})})
 public class Relation {
     @Id
-    @GeneratedValue
-    @Column(name = "relation_id")
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2")
+    @Column(columnDefinition = "BINARY(16)", name = "relation_id")
+    private UUID id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

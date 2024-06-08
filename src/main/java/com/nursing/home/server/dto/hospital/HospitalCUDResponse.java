@@ -8,12 +8,13 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Builder
 @AllArgsConstructor
 @Getter
 public class HospitalCUDResponse {
-    private Long id;
+    private UUID id;
     // 병원이름
     private String name;
     private String tel;

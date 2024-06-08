@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/hospital")
@@ -22,7 +23,7 @@ public class HospitalController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<HospitalReadResponse> getHospital(@PathVariable Long id) {
+    public ApiResponse<HospitalReadResponse> getHospital(@PathVariable UUID id) {
         return ApiResponse.ok(hospitalService.getHospital(id));
     }
 
@@ -32,12 +33,12 @@ public class HospitalController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<HospitalCUDResponse> updateHospital(@PathVariable Long id, @RequestBody @Valid HospitalUpdateRequest request) {
+    public ApiResponse<HospitalCUDResponse> updateHospital(@PathVariable UUID id, @RequestBody @Valid HospitalUpdateRequest request) {
         return ApiResponse.ok(hospitalService.updateHospital(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<HospitalCUDResponse> deleteHospital(@PathVariable Long id) {
+    public ApiResponse<HospitalCUDResponse> deleteHospital(@PathVariable UUID id) {
         return ApiResponse.ok(hospitalService.deleteHospital(id));
     }
 }

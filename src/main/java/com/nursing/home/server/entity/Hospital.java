@@ -5,11 +5,14 @@ import com.nursing.home.server.dto.hospital.HospitalUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.GenericGenerators;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -19,9 +22,10 @@ import java.util.List;
 public class Hospital {
 
     @Id
-    @GeneratedValue
-    @Column(name="hospital_id")
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2")
+    @Column(columnDefinition = "BINARY(16)", name = "hospital_id")
+    private UUID id;
     private String name;
     private String category;
     private String tel;
@@ -35,10 +39,14 @@ public class Hospital {
     private List<ClinicHours> clinicHoursList;
     private String latitude;
     private String longitude;
+    @OneToOne(mappedBy = "hospital")
+    private CareWorker careWorker;
     @CreationTimestamp 
     private final LocalDateTime createdAt = LocalDateTime.now();
     @UpdateTimestamp
     private final LocalDateTime updatedAt = LocalDateTime.now();
+
+
 
     @OneToMany(mappedBy = "hospital")
     List<Enroll> enrolls = new ArrayList<>();

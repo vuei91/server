@@ -4,10 +4,11 @@ import com.nursing.home.server.entity.ClinicHours;
 import lombok.Getter;
 
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Getter
 public class ClinicHoursReadResponse {
-    private Long id;
+    private UUID id;
     private String weekName;
     private String weekTime;
     private String breakTime;

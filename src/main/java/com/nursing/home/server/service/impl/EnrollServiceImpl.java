@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,19 +30,19 @@ public class EnrollServiceImpl implements EnrollService {
     }
 
     @Override
-    public List<EnrollHistoryDetailResponse> getEnrollHistoryDetail(Long patientId) {
+    public List<EnrollHistoryDetailResponse> getEnrollHistoryDetail(UUID patientId) {
         String username = GlobalStorage.getUsername();
         return enrollRepository.findHistoryDetailList(username, patientId);
     }
 
     @Override
-    public List<EnrollReadResponse> getEnrollsByHospital(Long hospitalId) {
+    public List<EnrollReadResponse> getEnrollsByHospital(UUID hospitalId) {
         String username = GlobalStorage.getUsername();
         return enrollRepository.findEnrollsByUsernameAndHospital(username, hospitalId);
     }
 
     @Override
-    public List<EnrollReadResponse> getEnrollLsByPatient(Long patientId) {
+    public List<EnrollReadResponse> getEnrollLsByPatient(UUID patientId) {
         String username = GlobalStorage.getUsername();
         return enrollRepository.findEnrollsByUsernameAndPatient(username, patientId);
     }
@@ -50,7 +51,7 @@ public class EnrollServiceImpl implements EnrollService {
     @Transactional
     public List<EnrollCUDResponse> createEnrolls(EnrollCreateRequest request) {
         String username = GlobalStorage.getUsername();
-        List<Long> patientIds = request.getPatientIds();
+        List<UUID> patientIds = request.getPatientIds();
         List<EnrollCUDResponse> enrolls = new ArrayList<>();
         Member member = memberRepository
                 .findByUsername(username)
@@ -58,7 +59,7 @@ public class EnrollServiceImpl implements EnrollService {
         Hospital hospital = hospitalRepository
                 .findById(request.getHospitalId())
                 .orElseThrow(NotFoundHospitalException::new);
-        for (Long patientId : patientIds) {
+        for (UUID patientId : patientIds) {
             Relation relation = relationRepository
                     .findByMemberIdAndPatientId(member.getId(), patientId)
                     .orElseThrow(NotFoundRelationException::new);
@@ -73,7 +74,7 @@ public class EnrollServiceImpl implements EnrollService {
     }
 
     @Override
-    public EnrollCUDResponse cancel(Long id) {
+    public EnrollCUDResponse cancel(UUID id) {
         Enroll enroll = enrollRepository.findById(id).orElseThrow(NotFoundEnrollException::new);
         enroll.cancel();
         Enroll newEnroll = enrollRepository.save(enroll);
@@ -81,7 +82,7 @@ public class EnrollServiceImpl implements EnrollService {
     }
 
     @Override
-    public EnrollCUDResponse progress(Long id) {
+    public EnrollCUDResponse progress(UUID id) {
         Enroll enroll = enrollRepository.findById(id).orElseThrow(NotFoundEnrollException::new);
         enroll.progress();
         Enroll newEnroll = enrollRepository.save(enroll);

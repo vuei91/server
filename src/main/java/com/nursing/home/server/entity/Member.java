@@ -5,11 +5,13 @@ import com.nursing.home.server.dto.member.MemberUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -18,9 +20,10 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
     @Id
-    @Column(name = "member_id")
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2")
+    @Column(columnDefinition = "BINARY(16)", name = "member_id")
+    private UUID id;
     @Column(unique = true)
     private String username;
     private String password;
@@ -34,6 +37,8 @@ public class Member {
     private String address;
     private String latitude;
     private String longitude;
+    @OneToOne(mappedBy = "member")
+    private CareWorker careWorker;
     @CreationTimestamp 
     private LocalDateTime createdAt;
     @UpdateTimestamp 

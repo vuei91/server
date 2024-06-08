@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -24,17 +25,17 @@ public class EnrollController {
     }
 
     @GetMapping("/{patientId}")
-    public ApiResponse<List<EnrollHistoryDetailResponse>> getEnrollHistoryDetail(@PathVariable Long patientId) {
+    public ApiResponse<List<EnrollHistoryDetailResponse>> getEnrollHistoryDetail(@PathVariable UUID patientId) {
         return ApiResponse.ok(enrollServiceImpl.getEnrollHistoryDetail(patientId));
     }
 
     @GetMapping("/hospital/{hospitalId}")
-    public ApiResponse<List<EnrollReadResponse>> getEnrollLsByHospital(@PathVariable Long hospitalId) {
+    public ApiResponse<List<EnrollReadResponse>> getEnrollLsByHospital(@PathVariable UUID hospitalId) {
         return ApiResponse.ok(enrollServiceImpl.getEnrollsByHospital(hospitalId));
     }
 
     @GetMapping("/patient/{patientId}")
-    public ApiResponse<List<EnrollReadResponse>> getEnrollLsByPatient(@PathVariable Long patientId) {
+    public ApiResponse<List<EnrollReadResponse>> getEnrollLsByPatient(@PathVariable UUID patientId) {
         return ApiResponse.ok(enrollServiceImpl.getEnrollLsByPatient(patientId));
     }
 
@@ -44,12 +45,12 @@ public class EnrollController {
     }
 
     @PutMapping("/progress/{id}")
-    public ApiResponse<EnrollCUDResponse> progress(@PathVariable Long id) {
+    public ApiResponse<EnrollCUDResponse> progress(@PathVariable UUID id) {
         return ApiResponse.ok(enrollServiceImpl.progress(id));
     }
 
     @PutMapping("/cancel/{id}")
-    public ApiResponse<EnrollCUDResponse> cancel(@PathVariable Long id) {
+    public ApiResponse<EnrollCUDResponse> cancel(@PathVariable UUID id) {
         return ApiResponse.ok(enrollServiceImpl.cancel(id));
     }
 }

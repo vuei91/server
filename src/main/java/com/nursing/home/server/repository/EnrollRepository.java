@@ -8,8 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface EnrollRepository extends JpaRepository<Enroll, Long> {
+public interface EnrollRepository extends JpaRepository<Enroll, UUID> {
 
     @Query(value =
             "select" +
@@ -37,7 +38,7 @@ public interface EnrollRepository extends JpaRepository<Enroll, Long> {
                     " join fetch Hospital h on h = e.hospital" +
                     " where m.username = :username and h.id = :hospitalId"
     )
-    List<EnrollReadResponse> findEnrollsByUsernameAndHospital(String username, Long hospitalId);
+    List<EnrollReadResponse> findEnrollsByUsernameAndHospital(String username, UUID hospitalId);
 
     @Query(value =
             "select" +
@@ -65,7 +66,7 @@ public interface EnrollRepository extends JpaRepository<Enroll, Long> {
                     " join fetch Hospital h on h = e.hospital" +
                     " where m.username = :username and p.id = :patientId"
     )
-    List<EnrollReadResponse> findEnrollsByUsernameAndPatient(String username, Long patientId);
+    List<EnrollReadResponse> findEnrollsByUsernameAndPatient(String username, UUID patientId);
 
 
     @Query(
@@ -104,5 +105,5 @@ public interface EnrollRepository extends JpaRepository<Enroll, Long> {
             " join fetch Enroll e on e.relation = r" +
             " join fetch Hospital h on h = e.hospital" +
             " where m.username = :username and p.id = :patientId")
-    List<EnrollHistoryDetailResponse> findHistoryDetailList(String username, Long patientId);
+    List<EnrollHistoryDetailResponse> findHistoryDetailList(String username, UUID patientId);
 }
