@@ -1,11 +1,17 @@
 package com.nursing.home.server.dto.patient;
 
 import com.nursing.home.server.entity.Patient;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PatientReadResponse {
     private UUID id;
     private String name;

@@ -26,7 +26,7 @@ public class Enroll {
 
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)", name = "enroll_id")
     private UUID id;
 

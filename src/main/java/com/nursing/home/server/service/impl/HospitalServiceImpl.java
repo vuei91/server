@@ -45,6 +45,8 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public HospitalReadResponse getHospital(UUID id) {
+        System.out.println("------------------------");
+        System.out.println(id);
         Hospital hospital = hospitalRepository.findById(id).orElseThrow(NotFoundMemberException::new);
         return new HospitalReadResponse(hospital);
     }

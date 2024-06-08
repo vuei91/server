@@ -23,7 +23,7 @@ import java.util.UUID;
 public class Relation {
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)", name = "relation_id")
     private UUID id;
     @ManyToOne(fetch = FetchType.LAZY)

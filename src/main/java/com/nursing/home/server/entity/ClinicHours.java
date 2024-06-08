@@ -18,7 +18,7 @@ import java.util.UUID;
 public class ClinicHours {
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)", name = "clinic_hours_id")
     private UUID id;
     @ManyToOne(fetch = FetchType.LAZY)

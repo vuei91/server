@@ -1,13 +1,19 @@
 package com.nursing.home.server.dto.hospital;
 
 import com.nursing.home.server.entity.Hospital;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class HospitalReadResponse {
     private UUID id;
     private String name;

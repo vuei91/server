@@ -1,12 +1,17 @@
 package com.nursing.home.server.dto.hospital;
 
 import com.nursing.home.server.entity.ClinicHours;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
 import java.util.UUID;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClinicHoursReadResponse {
     private UUID id;
     private String weekName;

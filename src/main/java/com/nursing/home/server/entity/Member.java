@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Member {
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)", name = "member_id")
     private UUID id;
     @Column(unique = true)
