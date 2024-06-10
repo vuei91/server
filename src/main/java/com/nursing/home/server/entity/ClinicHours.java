@@ -29,9 +29,9 @@ public class ClinicHours {
     private String deadlineTime;
     private String breakTime;
     @CreationTimestamp 
-    private final LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
     @UpdateTimestamp 
-    private final LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime updatedAt;
 
     public ClinicHours (ClinicHoursCreateRequest request, Hospital hospital) {
         this.weekName = request.getWeekName();

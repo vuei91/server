@@ -42,9 +42,9 @@ public class Enroll {
     private EnrollStatus enrollStatus;
 
     @CreationTimestamp 
-    private final LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
     @UpdateTimestamp 
-    private final LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime updatedAt;
 
     public Enroll(Hospital hospital, Relation relation, EnrollCreateRequest request) {
         this.hospital = hospital;

@@ -41,9 +41,9 @@ public class Hospital {
     @OneToOne(mappedBy = "hospital")
     private CareWorker careWorker;
     @CreationTimestamp 
-    private final LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private final LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime updatedAt;
 
 
 
