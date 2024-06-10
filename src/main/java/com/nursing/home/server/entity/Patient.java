@@ -3,9 +3,7 @@ package com.nursing.home.server.entity;
 import com.nursing.home.server.dto.patient.PatientCreateRequest;
 import com.nursing.home.server.dto.patient.PatientUpdateRequest;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,6 +15,8 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Patient {
     @Id
@@ -32,13 +32,14 @@ public class Patient {
     private String latitude;
     private String longitude;
     private Integer grade;
-    @CreationTimestamp 
-    private LocalDateTime createdAt;
-    @UpdateTimestamp 
-    private LocalDateTime updatedAt;
-    
+
     @OneToMany(mappedBy = "patient")
     List<Relation> relations = new ArrayList<>();
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     public Patient(PatientCreateRequest request) {
         this.name = request.getName();
