@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.id.uuid.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.UUID;
 public class Relation {
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GenericGenerator(name = "UUID", type = UuidGenerator.class)
     @Column(columnDefinition = "BINARY(16)", name = "relation_id")
     private UUID id;
     @ManyToOne(fetch = FetchType.LAZY)

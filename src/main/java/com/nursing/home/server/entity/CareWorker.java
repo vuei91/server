@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.id.UUIDGenerator;
+import org.hibernate.id.uuid.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,7 +19,7 @@ import java.util.UUID;
 public class CareWorker {
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GenericGenerator(name = "UUID", type = UuidGenerator.class)
     @Column(columnDefinition = "BINARY(16)", name = "care_worker_id")
     private UUID id;
 
